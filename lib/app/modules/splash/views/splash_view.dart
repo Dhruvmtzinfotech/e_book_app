@@ -10,12 +10,12 @@ class SplashView extends StatefulWidget {
 }
 
 class _SplashViewState extends State<SplashView> {
-  final SplashController splashController = Get.put(SplashController());
+   SplashController splashController = Get.put(SplashController());
 
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(seconds: 5), () {
+    Future.delayed(Duration(seconds: 3), () {
       splashController.checkData();
     });
   }
@@ -24,11 +24,7 @@ class _SplashViewState extends State<SplashView> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          child: Image.asset("assets/img/splash.jpg", fit: BoxFit.cover),
-        ),
+        child: Center(child: Image.asset("assets/img/splash.jpg"))
       ),
     );
   }

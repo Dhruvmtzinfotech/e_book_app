@@ -1,3 +1,5 @@
+import 'package:e_book_app/api/widgets.dart';
+import 'package:e_book_app/app/modules/home/controllers/home_controller.dart';
 import 'package:e_book_app/app/modules/profile/controllers/profile_controller.dart';
 import 'package:e_book_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +16,8 @@ class ProfileView extends StatefulWidget {
 
 class _ProfileViewState extends State<ProfileView> {
   ProfileController profileCon = Get.put(ProfileController());
+  HomeController homeCon = Get.put(HomeController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,12 +41,12 @@ class _ProfileViewState extends State<ProfileView> {
                         ),
                       ),
                       child: ClipOval(
-                        child: Image.asset("assets/img/phoneAuth.png", height: height_18),
+                        child:Image.network(homeCon.photo.value) // Image.asset("assets/img/phoneAuth.png", height: height_18),
                       ),
                     ),
                     Positioned(
-                      bottom: 5,
-                      right: 15,
+                      bottom: 1,
+                      right: 8,
                       child: Container(
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
@@ -51,13 +55,17 @@ class _ProfileViewState extends State<ProfileView> {
                             color: Colors.grey,
                           ),
                         ),
-                        child: Icon(Icons.upload),
+                        child: GestureDetector(
+                          onTap: (){
+                            bottomSheet();
+                          },
+                            child: Icon(Icons.upload)),
                       ),
                     ),
                   ],
                 ),
               ),
-              Text("Dhruv Ghoghari",style: TextStyle(
+              Text(homeCon.name.value,style: TextStyle(
                 fontWeight: FontWeight.w500,
                 fontSize: 18.0,
               ),),
@@ -70,55 +78,28 @@ class _ProfileViewState extends State<ProfileView> {
                       controller: profileCon.nameController,
                       keyboardType: TextInputType.text,
                       decoration: AppTheme.customTextfield("Name"),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your name name';
-                        }
-                        return null;
-                      },
+                      validator: profileCon.nameValidation
                     ),
                     SizedBox(height: height_2),
                     TextFormField(
                       controller: profileCon.mobileController,
                       keyboardType: TextInputType.number,
                       decoration: AppTheme.customTextfield("Mobile No"),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter a mobile number';
-                        } else if (value.length != 10 ||
-                            profileCon.isNumeric(value)) {
-                          return 'Please enter a valid 10-digit mobile number';
-                        }
-                        return null;
-                      },
+                      validator: profileCon.mobilValidation
                     ),
                     SizedBox(height: height_2),
                     TextFormField(
                       controller: profileCon.emailController,
                       keyboardType: TextInputType.emailAddress,
                       decoration: AppTheme.customTextfield("Email"),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your email';
-                        } else if (!RegExp(
-                            r"^[a-zA-Z0-9.a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$")
-                            .hasMatch(value)) {
-                          return 'Please enter a valid email address';
-                        }
-                        return null;
-                      },
+                      validator: profileCon.emailValidation
                     ),
                     SizedBox(height: height_2),
                     TextFormField(
                       controller: profileCon.cityController,
                       keyboardType: TextInputType.text,
                       decoration: AppTheme.customTextfield("City"),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter City';
-                        }
-                        return null;
-                      },
+                      validator: profileCon.cityValidation
                     ),
                     SizedBox(height: height_2),
                     Button(btnText: "Update", onClick: (){
@@ -128,11 +109,13 @@ class _ProfileViewState extends State<ProfileView> {
                           var mobile = profileCon.mobileController.text;
                           var email = profileCon.emailController.text;
                           var city = profileCon.cityController.text;
-        
+                        }
+                      else
+                        {
+
                         }
         
                     })
-        
                   ],
                 ),
               ),

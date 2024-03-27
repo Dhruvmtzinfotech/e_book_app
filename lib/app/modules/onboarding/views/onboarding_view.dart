@@ -1,4 +1,3 @@
-import 'package:e_book_app/app/modules/login/views/login_view.dart';
 import 'package:e_book_app/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -20,25 +19,6 @@ class _OnboardingViewState extends State<OnboardingView> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        // SizedBox(height: 130),
-        // Image.asset("assets/img/onBoardingImg.jpg"),
-        // Text("Only Books Can Help You ",
-        //   style: TextStyle(
-        //     fontSize: 25,
-        //     fontWeight: FontWeight.bold,
-        //   ),
-        // ),
-        // Padding(
-        //   padding: const EdgeInsets.all(15.0),
-        //   child: Text("Books can help you to increase your knowledge and become more successful,",
-        //     textAlign: TextAlign.center,
-        //     style: TextStyle(
-        //       color: Colors.grey,
-        //       fontSize: 20,
-        //       fontWeight: FontWeight.bold,
-        //     ),
-        //   ),
-        // ),
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: IntroductionScreen(

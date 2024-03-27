@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../../../function.dart';
+import '../../profile/controllers/profile_controller.dart';
 
 class LoginView extends StatefulWidget {
 
@@ -19,6 +19,7 @@ class LoginView extends StatefulWidget {
 
 class _LoginViewState extends State<LoginView> {
   final FirebaseAuth auth = FirebaseAuth.instance;
+  ProfileController profileCon = Get.put(ProfileController());
 
   LoginController loginCon = Get.put(LoginController());
   @override
@@ -72,35 +73,50 @@ class _LoginViewState extends State<LoginView> {
                               contentPadding: EdgeInsets.all(20.0),
                               border: InputBorder.none,
                               hintText: 'Enter Mobile Number',
-                              suffixIcon: Icon(Icons.phone_android)
+                            prefixIcon: Padding(padding: EdgeInsets.all(15), child: Text('+91')),
                           ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter a mobile number';
+                            } else if (value.length != 10 ||
+                                profileCon.isNumeric(value)) {
+                              return 'Please enter a valid 10-digit mobile number';
+                            }
+                            return null;
+                          },
                         ),
                       ),
-                      Row(
-                        children: [
-                          Checkbox(
-                              value: loginCon.valueFirst.value,
-                              activeColor: Colors.deepOrangeAccent,
-                              onChanged:(Value){
-                                setState(() {
-                                  loginCon.valueFirst.value = Value!;
-                                });
-                              }),
-                          Text("Remember Me",style: TextStyle(
-                              color: Colors.grey,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 15
-                          ),),
-                          SizedBox(width: width_20),
-                          Text("Forgot Password?",style: TextStyle(
-                              color: Colors.grey,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 15
-                          ),),
-                        ],
-                      ),
+                      // Row(
+                      //   children: [
+                      //     Checkbox(
+                      //         value: loginCon.valueFirst.value,
+                      //         activeColor: Colors.deepOrangeAccent,
+                      //         onChanged:(Value){
+                      //           setState(() {
+                      //             loginCon.valueFirst.value = Value!;
+                      //           });
+                      //         }),
+                      //     Text("Remember Me",style: TextStyle(
+                      //         color: Colors.grey,
+                      //         fontWeight: FontWeight.w500,
+                      //         fontSize: 15
+                      //     ),),
+                      //     SizedBox(width: width_20),
+                      //     Text("Forgot Password?",style: TextStyle(
+                      //         color: Colors.grey,
+                      //         fontWeight: FontWeight.w500,
+                      //         fontSize: 15
+                      //     ),),
+                      //   ],
+                      // ),
                       SizedBox(height: height_3),
                       Button(btnText: "Login", onClick: () async{
+                        // if(loginCon.loginKey.currentState?.validate() ?? false) {
+                        //     var mobile = profileCon.mobileController.text;
+                        //   }
+                        // else {
+                        //
+                        //   }
                         await FirebaseAuth.instance.verifyPhoneNumber(verificationCompleted: (PhoneAuthCredential credential) {},
                             verificationFailed: (FirebaseAuthException ex) {},
                             codeSent: (String verificationId, int? resendToken) {
@@ -143,7 +159,7 @@ class _LoginViewState extends State<LoginView> {
                               accessToken: googleSignInAuthentication.accessToken);
 
                           UserCredential result = await auth.signInWithCredential(authCredential);
-                          User user = result!.user!;
+                          User user = result.user!;
 
                           var name = user.displayName.toString();
                           var email = user.email.toString();
@@ -152,13 +168,13 @@ class _LoginViewState extends State<LoginView> {
 
                           SharedPreferences prefs = await SharedPreferences.getInstance();
                           prefs.setString("name", name);
-                          prefs.setString("isLogin", "yes");
+                         // prefs.setString("isLogin", "true");
+                          prefs.setBool('isLogin', true);
                           prefs.setString("email", email);
                           prefs.setString("photo", photo);
                           prefs.setString("googleId", googleId);
 
                           Get.offAllNamed(Routes.HOME);
-                          Get.back();
                         }
                       },
                         child: Container(

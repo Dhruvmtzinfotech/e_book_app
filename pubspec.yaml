@@ -30,6 +30,8 @@ dependencies:
   firebase_storage: ^11.6.9
   # for google Login
   google_sign_in: ^6.2.1
+  # for fb Login
+  flutter_facebook_auth: ^6.1.1
   # for Image Slider
   carousel_slider: ^4.2.1
   # for image dots show
@@ -37,11 +39,19 @@ dependencies:
   # for PdfViewer
   syncfusion_flutter_pdfviewer: ^23.2.4
   # for Play Youtube Video
+  youtube_player_iframe: ^4.0.4
+  # for Play Youtube Video
   youtube_player_flutter: ^9.0.0
   # for some sharing files and links etc...
   share_plus: ^7.2.2
-  # for fb auth login
-  flutter_facebook_auth: ^6.1.1
+  # for image pick
+  image_picker: ^1.0.7
+  # for more text show
+  flutter_expandable_text: ^1.0.0
+  # for app rating
+  in_app_review: ^2.0.9
+
+
 
 
 

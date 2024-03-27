@@ -2,7 +2,6 @@ import 'dart:developer';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 const List<String> _videoIds = [
   'tcodrIK2P_I',
@@ -231,64 +230,4 @@ class VideoPositionSeeker extends StatelessWidget {
   }
 }
 
-
-
-class VideoList extends StatefulWidget {
-  const VideoList({super.key});
-
-  @override
-  _VideoListState createState() => VideoListState();
-}
-
-class VideoListState {
-}
-
-class _VideoListState extends State<VideoList> {
-  final List<YoutubePlayerController> _controllers = [
-    "hoNb6HuNmU0" ,
-    'nPt8bK2gbaU',
-    'gQDByCdjUXw',
-    'iLnmTe5Q2Qw',
-    '_WoCV4c6XOE',
-    'KmzdUe0RSJo',
-    '6jZDSSZZxjQ',
-    'p2lYr3vM_1w',
-    '7QUtEmBT_-w',
-    '34_PXCzGw1M',
-  ]
-      .map<YoutubePlayerController>(
-        (videoId) => YoutubePlayerController(
-      initialVideoId: videoId,
-      flags: YoutubePlayerFlags(
-        autoPlay: false,
-      ),
-    ),
-  ).toList();
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar:Common.cmnAppBar(title: "Video List") ,
-      body: ListView.separated(
-        itemBuilder: (context, index) {
-          return YoutubePlayer(
-            key: ObjectKey(_controllers[index]),
-            controller: _controllers[index],
-            actionsPadding:  EdgeInsets.only(left: 16.0),
-            bottomActions: [
-              CurrentPosition(),
-               SizedBox(width: 10.0),
-              ProgressBar(isExpanded: true),
-               SizedBox(width: 10.0),
-              RemainingDuration(),
-              FullScreenButton(),
-            ],
-          );
-        },
-        itemCount: _controllers.length,
-        separatorBuilder: (context, _) => const SizedBox(height: 10.0),
-      ),
-    );
-  }
-}
 

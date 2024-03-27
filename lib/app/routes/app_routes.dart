@@ -12,6 +12,10 @@ abstract class Routes {
   static const SUBJECT = _Paths.SUBJECT;
   static const PDF = _Paths.PDF;
   static const VIDEO = _Paths.VIDEO;
+  static const FAQ = _Paths.FAQ;
+  static const PRIVACYPOLICY = _Paths.PRIVACYPOLICY;
+  static const CONTACT_US = _Paths.CONTACT_US;
+  static const RATE = _Paths.RATE;
 }
 
 abstract class _Paths {
@@ -26,4 +30,8 @@ abstract class _Paths {
   static const SUBJECT = '/subject';
   static const PDF = '/pdf';
   static const VIDEO = '/video';
+  static const FAQ = '/faq';
+  static const PRIVACYPOLICY = '/privacypolicy';
+  static const CONTACT_US = '/contact-us';
+  static const RATE = '/rate';
 }

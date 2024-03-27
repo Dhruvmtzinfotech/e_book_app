@@ -1,7 +1,10 @@
 import 'package:get/get.dart';
-
+import '../modules/ContactUs/bindings/contact_us_binding.dart';
+import '../modules/ContactUs/views/contact_us_view.dart';
 import '../modules/books/bindings/books_binding.dart';
 import '../modules/books/views/books_view.dart';
+import '../modules/faq/bindings/faq_binding.dart';
+import '../modules/faq/views/faq_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/login/bindings/login_binding.dart';
@@ -12,8 +15,12 @@ import '../modules/otp/bindings/otp_binding.dart';
 import '../modules/otp/views/otp_view.dart';
 import '../modules/pdf/bindings/pdf_binding.dart';
 import '../modules/pdf/views/pdf_view.dart';
+import '../modules/privacypolicy/bindings/privacypolicy_binding.dart';
+import '../modules/privacypolicy/views/privacypolicy_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/profile_view.dart';
+import '../modules/rate/bindings/rate_binding.dart';
+import '../modules/rate/views/rate_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
 import '../modules/subject/bindings/subject_binding.dart';
@@ -76,8 +83,28 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.VIDEO,
-      page: () =>  VideoView(),
+      page: () => VideoView(),
       binding: VideoBinding(),
+    ),
+    GetPage(
+      name: _Paths.FAQ,
+      page: () => const FaqView(),
+      binding: FaqBinding(),
+    ),
+    GetPage(
+      name: _Paths.PRIVACYPOLICY,
+      page: () => const PrivacyPolicyView(),
+      binding: PrivacypolicyBinding(),
+    ),
+    GetPage(
+      name: _Paths.CONTACT_US,
+      page: () => const ContactUsView(),
+      binding: ContactUsBinding(),
+    ),
+    GetPage(
+      name: _Paths.RATE,
+      page: () => const RateView(),
+      binding: RateBinding(),
     ),
   ];
 }

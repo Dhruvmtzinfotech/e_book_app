@@ -6,27 +6,22 @@ class SplashController extends GetxController {
 
   checkData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (prefs.containsKey("IsLogin")) {
-     Get.offAllNamed(Routes.HOME);
-    }
-    else
-    {
-      if(prefs.containsKey("isFirst"))
-      {
-       Get.offAllNamed(Routes.LOGIN);
+    dynamic isLoginValue = prefs.get('isLogin');
+
+    if (prefs.containsKey("isLogin") && isLoginValue is bool) {
+      bool isLogin = isLoginValue;
+
+      if (isLogin) {
+        Get.offAllNamed(Routes.HOME);
       }
       else
       {
-        Get.offAllNamed(Routes.ONBOARDING);
+        if (prefs.containsKey("isFirst")) {
+          Get.offAllNamed(Routes.LOGIN);
+        } else {
+          Get.offAllNamed(Routes.ONBOARDING);
+        }
       }
     }
   }
-
-  @override
-  void onInit() {
-    super.onInit();
-    checkData();
-  }
-
-
 }

@@ -1,9 +1,15 @@
+import 'package:e_book_app/app/modules/faq/views/faq_view.dart';
+import 'package:e_book_app/app/modules/privacypolicy/views/privacypolicy_view.dart';
 import 'package:e_book_app/app/modules/profile/views/profile_view.dart';
+import 'package:e_book_app/app/modules/rate/views/rate_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../app/modules/ContactUs/views/contact_us_view.dart';
 import '../app/modules/home/controllers/home_controller.dart';
+import '../app/modules/home/views/home_view.dart';
 import '../app/routes/app_pages.dart';
 import '../utils/responsive.dart';
 import 'package:share_plus/share_plus.dart';
@@ -46,9 +52,20 @@ class Button extends StatelessWidget {
 
 
 /* Drawer*/
-void shareFiles() {
-  final List<XFile> files = [XFile('path/to/your/file')];
-  Share.shareXFiles(files, text: 'Check out this file!');
+final ImagePicker picker = ImagePicker();
+
+String msg="https://play.google.com/store/apps/details?id=com.example.com.example.e_book_app";
+
+ShareText(){
+  Share.share(msg);
+}
+
+Shareimage() async{
+  final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+  if(image == null) {
+    return;
+  }
+  Share.shareXFiles([image]);
 }
 
 HomeController homeCon = Get.put(HomeController());
@@ -63,7 +80,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: ListView(
+        child: ListView(
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -82,7 +99,8 @@ class _CustomDrawerState extends State<CustomDrawer> {
                             ),
                           ),
                           child: ClipOval(
-                            child: Image.asset("assets/img/phoneAuth.png", height: height_18),
+                            child: Image.network(homeCon.photo.value,fit: BoxFit.cover,)
+                                //: Image.asset("assets/img/phoneAuth.png", height: height_18),
                           ),
                         ),
                         Positioned(
@@ -109,7 +127,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 ),
                 Row(
                   children: [
-                    Text("Dhruv Ghoghari",style: TextStyle(
+                    Text(homeCon.name.value,style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 18.0,
                     ),),
@@ -119,24 +137,30 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   color: Colors.black,
                 ),
                 SizedBox(height: height_2),
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.grey.shade300,
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        Text("Rate Us",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 18.0,
+                GestureDetector(
+                  onTap: (){
+                    scaffoldKey.currentState!.openEndDrawer();
+                      Get.to(() => RateView());
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade300,
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Text("Rate Us",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 18.0,
+                            ),
                           ),
-                        ),
-                        Spacer(),
-                        Image.asset("assets/img/back_arrow.png"),
-                      ],
+                          Spacer(),
+                          Image.asset("assets/img/back_arrow.png"),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -165,10 +189,8 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 SizedBox(height: height_2,),
                 GestureDetector(
                   onTap: () async{
-                    // Share.share('Check out this awesome Flutter package!');
-                    // Share.shareXFiles(files, text: 'See these documents', subject: 'Important Docs');
-
-
+                    ShareText();
+                    // Shareimage();
                   },
                   child: Container(
                     decoration: BoxDecoration(
@@ -215,68 +237,83 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   ),
                 ),
                 SizedBox(height: height_2,),
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.grey.shade300,
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        Text("FAQ",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 18.0,
+                GestureDetector(
+                  onTap: (){
+                    Get.to(() => FaqView());
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade300,
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Text("FAQ",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 18.0,
+                            ),
                           ),
-                        ),
-                        Spacer(),
-                        Image.asset("assets/img/back_arrow.png"),
-                      ],
+                          Spacer(),
+                          Image.asset("assets/img/back_arrow.png"),
+                        ],
+                      ),
                     ),
                   ),
                 ),
                 SizedBox(height: height_2,),
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.grey.shade300,
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        Text("Contact Us",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 18.0,
+                GestureDetector(
+                  onTap: (){
+                    Get.to(() => ContactUsView());
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade300,
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Text("Contact Us",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 18.0,
+                            ),
                           ),
-                        ),
-                        Spacer(),
-                        Image.asset("assets/img/back_arrow.png"),
-                      ],
+                          Spacer(),
+                          Image.asset("assets/img/back_arrow.png"),
+                        ],
+                      ),
                     ),
                   ),
                 ),
                 SizedBox(height: height_2,),
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.grey.shade300,
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        Text("Privacy Policy",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 18.0,
+                GestureDetector(
+                  onTap: (){
+                    Get.to(() => PrivacyPolicyView());
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade300,
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Text("Privacy Policy",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 18.0,
+                            ),
                           ),
-                        ),
-                        Spacer(),
-                        Image.asset("assets/img/back_arrow.png"),
-                      ],
+                          Spacer(),
+                          Image.asset("assets/img/back_arrow.png"),
+                        ],
+                      ),
                     ),
                   ),
                 ),

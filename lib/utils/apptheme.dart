@@ -12,6 +12,17 @@ class AppTheme{
   static const canvas = Color(0xffF0FBF5);
 
 
+  static ThemeData light = ThemeData(
+      textTheme: TextTheme(
+        displaySmall: TextStyle(
+          fontWeight: FontWeight.bold,
+          color: Colors.black,
+          fontSize: 15,
+        ),
+      )
+  );
+
+
   static InputDecoration customDecoration(String hintText,IconData prefixIcon) {
     return InputDecoration(
       hintText: hintText,
@@ -54,12 +65,23 @@ class AppTheme{
     ));
   }
 
-  static InputDecoration getDecoration()
-  {
+  static InputDecoration customTextfield(String hintText) {
     return InputDecoration(
-
+      hintText: hintText,
+      filled: true,
+      fillColor: Colors.grey[200],
+      contentPadding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10.0),
+        borderSide: BorderSide.none,
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10.0),
+        borderSide: BorderSide(color: Colors.grey[400]!, width: 1.0),
+      ),
+      // prefixIcon: Icon(prefixicon.iconData),
+      hintStyle: TextStyle(color: Colors.grey),
     );
-
   }
 
 }

@@ -1,12 +1,15 @@
 import 'package:e_book_app/app/modules/login/controllers/login_controller.dart';
 import 'package:e_book_app/app/modules/otp/views/otp_view.dart';
 import 'package:e_book_app/app/routes/app_pages.dart';
-import 'package:e_book_app/widgets/button.dart';
+import 'package:e_book_app/utils/responsive.dart';
+import 'package:e_book_app/widgets/widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../../../function.dart';
 
 class LoginView extends StatefulWidget {
 
@@ -22,50 +25,61 @@ class _LoginViewState extends State<LoginView> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      backgroundColor: Colors.deepOrange.shade100,
       body: SingleChildScrollView(
         child: SafeArea(
           child:Padding(
             padding: const EdgeInsets.all(20.0),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Welcome Back!",style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 30
-                ),),
-                Text("Login in to continue",style: TextStyle(
+                SizedBox(height: height_8),
+                Center(
+                  child: Container(
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                            color: Colors.black,
+                            width: 0.5
+                        )
+                    ),
+                    child: ClipOval(
+                      child: Image.asset("assets/img/phoneAuth.png",
+                        height: height_20,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: height_5),
+                Center(
+                  child: Text("Login with Mobile",style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
-                  color: Colors.grey
-                ),),
-                Center(child: Image.asset("assets/img/phoneAuth.png")),
-                SizedBox(height: 30,),
+                  ),),
+                ),
+                SizedBox(height: height_2,),
                 Form(
                   key: loginCon.loginKey,
                   child: Column(
                     children: [
                       Container(
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: Colors.grey.shade200,
                           borderRadius: BorderRadius.circular(8.0),
                         ),
                         child: TextFormField(
-                            controller: loginCon.phoneController,
-                            keyboardType: TextInputType.text,
-                            decoration: InputDecoration(
+                          controller: loginCon.phoneController,
+                          keyboardType: TextInputType.text,
+                          decoration: InputDecoration(
                               contentPadding: EdgeInsets.all(20.0),
                               border: InputBorder.none,
                               hintText: 'Enter Mobile Number',
                               suffixIcon: Icon(Icons.phone_android)
-                            ),
-                            cursorColor: Colors.deepOrangeAccent.shade100
+                          ),
                         ),
                       ),
                       Row(
                         children: [
-                           Checkbox(
-                               value: loginCon.valueFirst.value,
+                          Checkbox(
+                              value: loginCon.valueFirst.value,
                               activeColor: Colors.deepOrangeAccent,
                               onChanged:(Value){
                                 setState(() {
@@ -73,34 +87,50 @@ class _LoginViewState extends State<LoginView> {
                                 });
                               }),
                           Text("Remember Me",style: TextStyle(
-                            color: Colors.grey,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 18
+                              color: Colors.grey,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 15
                           ),),
-                          SizedBox(width: 40),
+                          SizedBox(width: width_20),
                           Text("Forgot Password?",style: TextStyle(
                               color: Colors.grey,
                               fontWeight: FontWeight.w500,
-                              fontSize: 18
+                              fontSize: 15
                           ),),
                         ],
                       ),
-                      SizedBox(height: 15),
+                      SizedBox(height: height_3),
                       Button(btnText: "Login", onClick: () async{
                         await FirebaseAuth.instance.verifyPhoneNumber(verificationCompleted: (PhoneAuthCredential credential) {},
                             verificationFailed: (FirebaseAuthException ex) {},
                             codeSent: (String verificationId, int? resendToken) {
 
-                           Get.to(() => OtpView(),arguments: verificationId);
+                              Get.to(() => OtpView(),arguments: verificationId);
                             },
                             codeAutoRetrievalTimeout: (String verificationId) {},
                             phoneNumber: loginCon.phoneController.text.toString());
-        
+
                       }),
-                      Text("Or Continue with ",style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.grey
-                      ),),
+                      SizedBox(height: height_1),
+                      Row(children: <Widget>[
+                        Expanded(
+                          child: new Container(
+                              margin: EdgeInsets.only(left: 10.0, right: 20.0),
+                              child: Divider(
+                                color: Colors.black,
+                                height: 36,
+                              )),
+                        ),
+                        Text("OR"),
+                        Expanded(
+                          child: Container(
+                              margin: const EdgeInsets.only(left: 20.0, right: 10.0),
+                              child: Divider(
+                                color: Colors.black,
+                                height: 36,
+                              )),
+                        ),
+                      ]),
                       GestureDetector(onTap: () async{
 
                         final GoogleSignIn googleSignIn = GoogleSignIn();
@@ -127,8 +157,8 @@ class _LoginViewState extends State<LoginView> {
                           prefs.setString("photo", photo);
                           prefs.setString("googleId", googleId);
 
-                         Get.offAllNamed(Routes.HOME);
-                         Get.back();
+                          Get.offAllNamed(Routes.HOME);
+                          Get.back();
                         }
                       },
                         child: Container(
@@ -144,6 +174,30 @@ class _LoginViewState extends State<LoginView> {
                                 child: Image.asset("assets/img/Google.jpg"),
                               ),
                               Text("Continue with Google",style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20.0,
+                              )),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: height_3),
+                      GestureDetector(onTap: () async{
+                        signInWithFacebook();
+                      },
+                        child: Container(
+                          width:MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                            color: Colors.grey.shade200,
+                            borderRadius: BorderRadius.circular(25.0),
+                          ),
+                          child: Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(15.0),
+                                child: Image.asset("assets/img/Facebook.jpg"),
+                              ),
+                              Text("Continue with Facebook",style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20.0,
                               )),

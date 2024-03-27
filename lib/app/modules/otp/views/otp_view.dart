@@ -1,6 +1,6 @@
 import 'package:e_book_app/app/modules/otp/controllers/otp_controller.dart';
 import 'package:e_book_app/app/routes/app_pages.dart';
-import 'package:e_book_app/widgets/button.dart';
+import 'package:e_book_app/widgets/widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

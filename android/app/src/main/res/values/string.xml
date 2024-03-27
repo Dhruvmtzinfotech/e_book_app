@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="facebook_app_id">942942217570652</string>
+    <string name="fb_login_protocol_scheme">fb942942217570652</string>
+    <string name="facebook_client_token">6afa22b36c366c3046cd1a944b567d4d</string>
+    <string name="app_name">"e_book_app"</string>
+
+</resources>
+
+

@@ -15,7 +15,7 @@ class _SplashViewState extends State<SplashView> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 2), () {
+    Future.delayed(Duration(seconds: 5), () {
       splashController.checkData();
     });
   }
@@ -24,36 +24,10 @@ class _SplashViewState extends State<SplashView> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Stack(
-          fit: StackFit.expand,
-          children: [
-            Container(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              child: Image.asset("assets/img/SplashImage.jpg", fit: BoxFit.cover),
-            ),
-            Center(
-              child: Container(
-                child: Center(
-                  child: Text("Welcome To E-Book App",
-                    style: TextStyle(
-                      color: Colors.deepOrangeAccent,
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                      fontStyle: FontStyle.italic,
-                      shadows: [
-                        Shadow(
-                          blurRadius: 3.0,
-                          color: Colors.black.withOpacity(0.3),
-                          offset: Offset(2.0, 2.0),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          child: Image.asset("assets/img/splash.jpg", fit: BoxFit.cover),
         ),
       ),
     );

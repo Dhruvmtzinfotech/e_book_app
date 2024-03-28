@@ -53,7 +53,6 @@ Future? bottomSheet() {
                 {
                   profileCon.updateProfileUrl(image.path);
                 }
-
               },  style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all<Color>(Colors.black),
               ),child: Text("Camera",style: TextStyle(
@@ -65,12 +64,17 @@ Future? bottomSheet() {
             Container(
               width: width_50,
               height: height_8,
-              child: ElevatedButton(onPressed: (){
+              child: ElevatedButton(onPressed: () async{
 
+                final XFile? photo = await picker.pickImage(source: ImageSource.gallery);
+                if(photo != null){
+                  profileCon.updateProfileUrl(photo.path);
+                }
 
               },  style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all<Color>(Colors.black),
-              ),child: Text("Galary",style: TextStyle(
+              ),child: Text("Galary",
+                style: TextStyle(
                   fontSize: 20.0,
                   color: Colors.white
               ),)),

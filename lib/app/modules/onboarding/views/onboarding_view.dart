@@ -1,72 +1,118 @@
 import 'package:e_book_app/app/routes/app_pages.dart';
+import 'package:e_book_app/utils/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:introduction_screen/introduction_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import '../../intropage/introPage1/views/intro_page1_view.dart';
+import '../../intropage/introPage2/views/intro_page2_view.dart';
+import '../../intropage/introPage3/views/intro_page3_view.dart';
+
 
 class OnboardingView extends StatefulWidget {
   const OnboardingView({Key? key}) : super(key: key);
 
   @override
-  _OnboardingViewState createState() => _OnboardingViewState();
+  State<OnboardingView> createState() => _OnboardingViewState();
 }
 
 class _OnboardingViewState extends State<OnboardingView> {
-  Widget _buildImage(String assetsName, [double width = 500]) {
-    return Image.asset('assets/img/$assetsName', width: width);
-  }
+  bool onLastPage = false;
+  PageController _controller = PageController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: IntroductionScreen(
-            pages: [
-              PageViewModel(
-                title: "Only Books Can Help You ",
-                body: "Books can help you to increase your knowledge and become more successful,",
-                image: _buildImage('onBoardingImg.jpg'),
-              ),
-              PageViewModel(
-                title: "Learn on your Time Schedule",
-                body: "Learn a lot of new skills with our interesting lesson by our courses and solve tasks",
-                image: _buildImage('onBoardingImg.jpg'),
-              ),
-              PageViewModel(
-                title: "Welcome to Ebook App",
-                body: "We have true friend in our life and the books is that.Book has power to change yourself and make you more valuable ",
-                image: _buildImage('welcomeImg.jpg'),
-              ),
-            ],
-            showSkipButton: true,
-            skip:  Text("Skip"),
-            next:  Text("Next",style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 20
-            ),),
-            done:  Text("Done",style: TextStyle(
-            fontWeight: FontWeight.bold,
-                fontSize: 20
-            ),),
-            onDone: ()  async{
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        actions: [
+          TextButton(
+            onPressed: () async {
               SharedPreferences prefs = await SharedPreferences.getInstance();
               prefs.setBool("isFirst", true);
               Get.offAllNamed(Routes.LOGIN);
             },
-            onSkip: ()
-            async {
-              SharedPreferences prefs = await SharedPreferences.getInstance();
-              prefs.setBool("isFirst", true);
-              Get.offAllNamed(Routes.LOGIN);
-            },
-            baseBtnStyle: TextButton.styleFrom(
-              backgroundColor: Colors.deepOrangeAccent,
+            child: Text("Skip",
+              style: TextStyle(color: Colors.black),
             ),
-            doneStyle: TextButton.styleFrom(foregroundColor: Colors.white),
-            nextStyle: TextButton.styleFrom(foregroundColor: Colors.white),
           ),
-        ),
+          SizedBox(width: 16),
+        ],
+      ),
+      body: Stack(
+        children: [
+          PageView(
+            controller: _controller,
+            onPageChanged: (index) {
+              setState(() {
+                onLastPage = (index == 2);
+              });
+            },
+            children: [
+              IntroPage1View(),
+              IntroPage2View(),
+              IntroPage3View(),
+            ],
+          ),
+          Container(
+            alignment: Alignment(0, 0.75),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                SmoothPageIndicator(
+                  controller: _controller,
+                  count: 3,
+                  effect: ExpandingDotsEffect(
+                    activeDotColor: Colors.orange,
+                  ),
+                ),
+                onLastPage
+                    ? SizedBox(
+                  width: width_40,
+                      child: ElevatedButton(
+                          onPressed: () async {
+                            SharedPreferences prefs =
+                                await SharedPreferences.getInstance();
+                            prefs.setBool("isFirst", true);
+                            Get.offAllNamed(Routes.LOGIN);
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.deepOrange,
+                          ),
+                          child: Text("Done", style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white,
+                              fontSize:20
+                            ),
+                          ),
+                        ),
+                    )
+                    : SizedBox(
+                  width: width_40,
+                      child: ElevatedButton(
+                          onPressed: () {
+                            _controller.nextPage(
+                              duration: Duration(microseconds: 500),
+                              curve: Curves.easeIn,
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.deepOrange,
+                          ),
+                          child: Text("Next",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white,
+                              fontSize: 20,
+                            ),
+                          ),
+                        ),
+                    )
+              ],
+            ),
+          )
+        ],
       ),
     );
   }

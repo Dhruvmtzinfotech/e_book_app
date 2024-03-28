@@ -50,6 +50,9 @@ dependencies:
   flutter_expandable_text: ^1.0.0
   # for app rating
   in_app_review: ^2.0.9
+  # for show inidcator
+  smooth_page_indicator: ^1.1.0
+  loading_indicator: ^3.1.1
 
 
 

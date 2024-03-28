@@ -105,7 +105,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                         ),
                         Positioned(
                           bottom: 5,
-                          right: 15,
+                          right: 10,
                           child: Container(
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
@@ -189,6 +189,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 SizedBox(height: height_2,),
                 GestureDetector(
                   onTap: () async{
+                    scaffoldKey.currentState!.openEndDrawer();
                     ShareText();
                     // Shareimage();
                   },
@@ -239,6 +240,8 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 SizedBox(height: height_2,),
                 GestureDetector(
                   onTap: (){
+                    scaffoldKey.currentState!.openEndDrawer();
+
                     Get.to(() => FaqView());
                   },
                   child: Container(
@@ -266,6 +269,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 SizedBox(height: height_2,),
                 GestureDetector(
                   onTap: (){
+                    scaffoldKey.currentState!.openEndDrawer();
                     Get.to(() => ContactUsView());
                   },
                   child: Container(
@@ -293,6 +297,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 SizedBox(height: height_2,),
                 GestureDetector(
                   onTap: (){
+                    scaffoldKey.currentState!.openEndDrawer();
                     Get.to(() => PrivacyPolicyView());
                   },
                   child: Container(

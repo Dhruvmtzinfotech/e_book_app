@@ -7,28 +7,31 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:loading_indicator/loading_indicator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../function.dart';
 import '../../profile/controllers/profile_controller.dart';
 
 class LoginView extends StatefulWidget {
-
   @override
   State<LoginView> createState() => _LoginViewState();
 }
 
 class _LoginViewState extends State<LoginView> {
+  bool _isLoading = false;
+
   final FirebaseAuth auth = FirebaseAuth.instance;
   ProfileController profileCon = Get.put(ProfileController());
 
   LoginController loginCon = Get.put(LoginController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: SingleChildScrollView(
         child: SafeArea(
-          child:Padding(
+          child: Padding(
             padding: const EdgeInsets.all(20.0),
             child: Column(
               children: [
@@ -37,13 +40,10 @@ class _LoginViewState extends State<LoginView> {
                   child: Container(
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        border: Border.all(
-                            color: Colors.black,
-                            width: 0.5
-                        )
-                    ),
+                        border: Border.all(color: Colors.black, width: 0.5)),
                     child: ClipOval(
-                      child: Image.asset("assets/img/phoneAuth.png",
+                      child: Image.asset(
+                        "assets/img/phoneAuth.png",
                         height: height_20,
                       ),
                     ),
@@ -51,12 +51,17 @@ class _LoginViewState extends State<LoginView> {
                 ),
                 SizedBox(height: height_5),
                 Center(
-                  child: Text("Login with Mobile",style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                  ),),
+                  child: Text(
+                    "Login with Mobile",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                  ),
                 ),
-                SizedBox(height: height_2,),
+                SizedBox(
+                  height: height_2,
+                ),
                 Form(
                   key: loginCon.loginKey,
                   child: Column(
@@ -70,20 +75,14 @@ class _LoginViewState extends State<LoginView> {
                           controller: loginCon.phoneController,
                           keyboardType: TextInputType.text,
                           decoration: InputDecoration(
-                              contentPadding: EdgeInsets.all(20.0),
-                              border: InputBorder.none,
-                              hintText: 'Enter Mobile Number',
-                            prefixIcon: Padding(padding: EdgeInsets.all(15), child: Text('+91')),
+                            contentPadding: EdgeInsets.all(20.0),
+                            border: InputBorder.none,
+                            hintText: 'Enter Mobile Number',
+                            prefixIcon: Padding(
+                                padding: EdgeInsets.all(15),
+                                child: Text('+91')),
                           ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter a mobile number';
-                            } else if (value.length != 10 ||
-                                profileCon.isNumeric(value)) {
-                              return 'Please enter a valid 10-digit mobile number';
-                            }
-                            return null;
-                          },
+                         // validator: profileCon.mobilValidation
                         ),
                       ),
                       // Row(
@@ -110,27 +109,30 @@ class _LoginViewState extends State<LoginView> {
                       //   ],
                       // ),
                       SizedBox(height: height_3),
-                      Button(btnText: "Login", onClick: () async{
-                        // if(loginCon.loginKey.currentState?.validate() ?? false) {
-                        //     var mobile = profileCon.mobileController.text;
-                        //   }
-                        // else {
-                        //
-                        //   }
-                        await FirebaseAuth.instance.verifyPhoneNumber(verificationCompleted: (PhoneAuthCredential credential) {},
-                            verificationFailed: (FirebaseAuthException ex) {},
-                            codeSent: (String verificationId, int? resendToken) {
+                      Button(
+                          btnText: "Login",
+                          onClick: () async {
+                            if(loginCon.loginKey.currentState?.validate() ?? false) {
+                                var mobile = profileCon.mobileController.text;
+                              }
+                            else{
+                              await FirebaseAuth.instance.verifyPhoneNumber(verificationCompleted:
+                                  (PhoneAuthCredential credential) {},
+                                  verificationFailed: (FirebaseAuthException ex) {
+                                  },
+                                  codeSent: (String verificationId, int? resendToken) {
 
-                              Get.to(() => OtpView(),arguments: verificationId);
-                            },
-                            codeAutoRetrievalTimeout: (String verificationId) {},
-                            phoneNumber: loginCon.phoneController.text.toString());
+                                    Get.to(() => OtpView(),arguments: verificationId);
+                                  },
+                                  codeAutoRetrievalTimeout:(String verificationId) {},
+                                  phoneNumber:loginCon.phoneController.text.toString());
+                              }
 
-                      }),
+                          }),
                       SizedBox(height: height_1),
                       Row(children: <Widget>[
                         Expanded(
-                          child: new Container(
+                          child: Container(
                               margin: EdgeInsets.only(left: 10.0, right: 20.0),
                               child: Divider(
                                 color: Colors.black,
@@ -140,69 +142,99 @@ class _LoginViewState extends State<LoginView> {
                         Text("OR"),
                         Expanded(
                           child: Container(
-                              margin: const EdgeInsets.only(left: 20.0, right: 10.0),
+                              margin: EdgeInsets.only(left: 20.0, right: 10.0),
                               child: Divider(
                                 color: Colors.black,
                                 height: 36,
                               )),
                         ),
                       ]),
-                      GestureDetector(onTap: () async{
+                      GestureDetector(
+                        onTap: () async {
+                          setState(() {
+                            _isLoading = true;
+                          });
 
-                        final GoogleSignIn googleSignIn = GoogleSignIn();
-                        final GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
-                        if (googleSignInAccount != null) {
-                          final GoogleSignInAuthentication googleSignInAuthentication =
-                          await googleSignInAccount.authentication;
-                          final AuthCredential authCredential = GoogleAuthProvider.credential(
-                              idToken: googleSignInAuthentication.idToken,
-                              accessToken: googleSignInAuthentication.accessToken);
+                          final GoogleSignIn googleSignIn = GoogleSignIn();
+                          try {
+                            final GoogleSignInAccount? googleSignInAccount =await googleSignIn.signIn();
+                            if (googleSignInAccount != null) {
+                              final GoogleSignInAuthentication
+                              googleSignInAuthentication = await googleSignInAccount.authentication;
+                              final AuthCredential authCredential = GoogleAuthProvider.credential(
+                                  idToken: googleSignInAuthentication.idToken,
+                                      accessToken: googleSignInAuthentication
+                                          .accessToken);
 
-                          UserCredential result = await auth.signInWithCredential(authCredential);
-                          User user = result.user!;
+                              UserCredential result = await FirebaseAuth
+                                  .instance
+                                  .signInWithCredential(authCredential);
+                              User user = result.user!;
 
-                          var name = user.displayName.toString();
-                          var email = user.email.toString();
-                          var photo = user.photoURL.toString();
-                          var googleId = user.uid.toString();
+                              var name = user.displayName.toString();
+                              var email = user.email.toString();
+                              var photo = user.photoURL.toString();
+                              var googleId = user.uid.toString();
 
-                          SharedPreferences prefs = await SharedPreferences.getInstance();
-                          prefs.setString("name", name);
-                         // prefs.setString("isLogin", "true");
-                          prefs.setBool('isLogin', true);
-                          prefs.setString("email", email);
-                          prefs.setString("photo", photo);
-                          prefs.setString("googleId", googleId);
+                              SharedPreferences prefs = await SharedPreferences.getInstance();
+                              prefs.setString("name", name);
+                              prefs.setBool('isLogin', true);
+                              prefs.setString("email", email);
+                              prefs.setString("photo", photo);
+                              prefs.setString("googleId", googleId);
 
-                          Get.offAllNamed(Routes.HOME);
-                        }
-                      },
-                        child: Container(
-                          width:MediaQuery.of(context).size.width,
-                          decoration: BoxDecoration(
-                            color: Colors.grey.shade200,
-                            borderRadius: BorderRadius.circular(25.0),
-                          ),
-                          child: Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(15.0),
-                                child: Image.asset("assets/img/Google.jpg"),
+                              Get.offAllNamed(Routes.HOME);
+                            }
+                          } catch (error) {
+                            print("Error signing in with Google: $error");
+                          } finally {
+                            setState(() {
+                              _isLoading = false;
+                            });
+                          }
+                        },
+                        child: _isLoading
+                            ? Container(
+                                width: MediaQuery.of(context).size.width,
+                                decoration: BoxDecoration(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  borderRadius: BorderRadius.circular(25.0),
+                                ),
+                                child: Center(
+                                  child: CircularProgressIndicator(color: Colors.grey,backgroundColor: Colors.deepOrangeAccent),
+                                ),
+                              )
+                            : Container(
+                                width: MediaQuery.of(context).size.width,
+                                decoration: BoxDecoration(
+                                  color: Colors.grey.shade200,
+                                  borderRadius: BorderRadius.circular(25.0),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(15.0),
+                                      child:
+                                          Image.asset("assets/img/Google.jpg"),
+                                    ),
+                                    Text(
+                                      "Continue with Google",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20.0,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                              Text("Continue with Google",style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20.0,
-                              )),
-                            ],
-                          ),
-                        ),
                       ),
                       SizedBox(height: height_3),
-                      GestureDetector(onTap: () async{
-                        signInWithFacebook();
-                      },
+                      GestureDetector(
+                        onTap: () async {
+                          signInWithFacebook();
+                        },
                         child: Container(
-                          width:MediaQuery.of(context).size.width,
+                          width: MediaQuery.of(context).size.width,
                           decoration: BoxDecoration(
                             color: Colors.grey.shade200,
                             borderRadius: BorderRadius.circular(25.0),
@@ -213,10 +245,11 @@ class _LoginViewState extends State<LoginView> {
                                 padding: const EdgeInsets.all(15.0),
                                 child: Image.asset("assets/img/Facebook.jpg"),
                               ),
-                              Text("Continue with Facebook",style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20.0,
-                              )),
+                              Text("Continue with Facebook",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20.0,
+                                  )),
                             ],
                           ),
                         ),

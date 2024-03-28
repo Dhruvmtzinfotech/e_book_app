@@ -32,6 +32,7 @@ class _ProfileViewState extends State<ProfileView> {
             children: [
               Center(
                 child: Stack(
+                  //profileCon.profileUrl.value,
                   children: [
                     Container(
                       decoration: BoxDecoration(
@@ -41,9 +42,17 @@ class _ProfileViewState extends State<ProfileView> {
                         ),
                       ),
                       child: ClipOval(
-                        child:Image.network(homeCon.photo.value) // Image.asset("assets/img/phoneAuth.png", height: height_18),
+                        child:Image.network(homeCon.photo.value)
                       ),
                     ),
+                    // : Container(
+                    //     decoration: BoxDecoration(
+                    //         shape: BoxShape.circle,
+                    //         border: Border.all(
+                    //           color: Colors.grey,
+                    //         ),
+                    //         image: DecorationImage(image: FileImage(File(profileCon.profileUrl.value)),fit: BoxFit.cover))),
+
                     Positioned(
                       bottom: 1,
                       right: 8,
@@ -80,46 +89,39 @@ class _ProfileViewState extends State<ProfileView> {
                       decoration: AppTheme.customTextfield("Name"),
                       validator: profileCon.nameValidation
                     ),
-                    SizedBox(height: height_2),
+                    SizedBox(height: height_3),
                     TextFormField(
                       controller: profileCon.mobileController,
                       keyboardType: TextInputType.number,
                       decoration: AppTheme.customTextfield("Mobile No"),
-                      validator: profileCon.mobilValidation
+                      validator: profileCon.mobilValidation,
+                      maxLength: 10,
                     ),
-                    SizedBox(height: height_2),
+                    SizedBox(height: height_1),
                     TextFormField(
                       controller: profileCon.emailController,
                       keyboardType: TextInputType.emailAddress,
                       decoration: AppTheme.customTextfield("Email"),
                       validator: profileCon.emailValidation
                     ),
-                    SizedBox(height: height_2),
+                    SizedBox(height: height_3),
                     TextFormField(
                       controller: profileCon.cityController,
                       keyboardType: TextInputType.text,
                       decoration: AppTheme.customTextfield("City"),
                       validator: profileCon.cityValidation
                     ),
-                    SizedBox(height: height_2),
+                    SizedBox(height: height_5),
                     Button(btnText: "Update", onClick: (){
-                      if (profileCon.formKey.currentState?.validate() ?? false)
-                        {
-                          var name = profileCon.nameController.text;
-                          var mobile = profileCon.mobileController.text;
-                          var email = profileCon.emailController.text;
-                          var city = profileCon.cityController.text;
+                      if (profileCon.formKey.currentState?.validate() ?? false) {
                         }
-                      else
-                        {
-
-                        }
+                      else {
+                      }
         
                     })
                   ],
                 ),
               ),
-        
             ],
           ),
         ),

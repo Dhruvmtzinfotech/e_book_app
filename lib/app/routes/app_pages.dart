@@ -7,6 +7,12 @@ import '../modules/faq/bindings/faq_binding.dart';
 import '../modules/faq/views/faq_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
+import '../modules/intropage/introPage1/bindings/intro_page1_binding.dart';
+import '../modules/intropage/introPage1/views/intro_page1_view.dart';
+import '../modules/intropage/introPage2/bindings/intro_page2_binding.dart';
+import '../modules/intropage/introPage2/views/intro_page2_view.dart';
+import '../modules/intropage/introPage3/bindings/intro_page3_binding.dart';
+import '../modules/intropage/introPage3/views/intro_page3_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
 import '../modules/onboarding/bindings/onboarding_binding.dart';
@@ -88,23 +94,38 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.FAQ,
-      page: () => const FaqView(),
+      page: () => FaqView(),
       binding: FaqBinding(),
     ),
     GetPage(
       name: _Paths.PRIVACYPOLICY,
-      page: () => const PrivacyPolicyView(),
+      page: () => PrivacyPolicyView(),
       binding: PrivacypolicyBinding(),
     ),
     GetPage(
       name: _Paths.CONTACT_US,
-      page: () => const ContactUsView(),
+      page: () => ContactUsView(),
       binding: ContactUsBinding(),
     ),
     GetPage(
       name: _Paths.RATE,
-      page: () => const RateView(),
+      page: () => RateView(),
       binding: RateBinding(),
+    ),
+    GetPage(
+      name: _Paths.INTRO_PAGE1,
+      page: () => IntroPage1View(),
+      binding: IntroPage1Binding(),
+    ),
+    GetPage(
+      name: _Paths.INTRO_PAGE2,
+      page: () => IntroPage2View(),
+      binding: IntroPage2Binding(),
+    ),
+    GetPage(
+      name: _Paths.INTRO_PAGE3,
+      page: () => IntroPage3View(),
+      binding: IntroPage3Binding(),
     ),
   ];
 }

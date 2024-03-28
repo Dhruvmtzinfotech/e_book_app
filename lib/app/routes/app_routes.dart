@@ -16,6 +16,9 @@ abstract class Routes {
   static const PRIVACYPOLICY = _Paths.PRIVACYPOLICY;
   static const CONTACT_US = _Paths.CONTACT_US;
   static const RATE = _Paths.RATE;
+  static const INTRO_PAGE1 = _Paths.INTRO_PAGE1;
+  static const INTRO_PAGE2 = _Paths.INTRO_PAGE2;
+  static const INTRO_PAGE3 = _Paths.INTRO_PAGE3;
 }
 
 abstract class _Paths {
@@ -34,4 +37,7 @@ abstract class _Paths {
   static const PRIVACYPOLICY = '/privacypolicy';
   static const CONTACT_US = '/contact-us';
   static const RATE = '/rate';
+  static const INTRO_PAGE1 = '/intro-page1';
+  static const INTRO_PAGE2 = '/intro-page2';
+  static const INTRO_PAGE3 = '/intro-page3';
 }

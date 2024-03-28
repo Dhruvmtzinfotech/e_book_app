@@ -1,24 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/src/snackbar/snackbar.dart';
 
 class AppTheme{
 
 
-
-  static const loginBtnColor = Colors.black;
-  static const border = Colors.grey;
-  static const canvas = Color(0xffF0FBF5);
-
-
   static ThemeData light = ThemeData(
       textTheme: TextTheme(
-        displaySmall: TextStyle(
-          fontWeight: FontWeight.bold,
-          color: Colors.black,
-          fontSize: 15,
-        ),
+
       )
   );
 
@@ -36,7 +24,7 @@ class AppTheme{
       border: const OutlineInputBorder(
         borderRadius: BorderRadius.all(Radius.circular(25)),
         gapPadding: 10,
-        borderSide: BorderSide(color: border, width: 2),
+        borderSide: BorderSide(color: Colors.black, width: 2),
       ),
       disabledBorder: const OutlineInputBorder(
         borderRadius: BorderRadius.all(Radius.circular(25)),
@@ -50,7 +38,7 @@ class AppTheme{
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(25.0),
-        borderSide: const BorderSide(color: loginBtnColor, width: 2),
+        borderSide: const BorderSide(color: Colors.black, width: 2),
       ),
       hintStyle: const TextStyle(color: Colors.grey),
     );

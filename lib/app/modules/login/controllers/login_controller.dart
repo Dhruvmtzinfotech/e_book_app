@@ -12,5 +12,4 @@ class LoginController extends GetxController {
   RxBool valueFirst = false.obs;
 
 
-
 }

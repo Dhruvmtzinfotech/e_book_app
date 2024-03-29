@@ -99,8 +99,8 @@ class _CustomDrawerState extends State<CustomDrawer> {
                             ),
                           ),
                           child: ClipOval(
-                            child: Image.network(homeCon.photo.value,fit: BoxFit.cover,)
-                                //: Image.asset("assets/img/phoneAuth.png", height: height_18),
+                              child: Image.network(homeCon.photo.value,fit: BoxFit.cover,)
+                            //: Image.asset("assets/img/phoneAuth.png", height: height_18),
                           ),
                         ),
                         Positioned(
@@ -115,9 +115,9 @@ class _CustomDrawerState extends State<CustomDrawer> {
                               ),
                             ),
                             child: GestureDetector(
-                              onTap: (){
-                                Get.to(() => ProfileView());
-                              },
+                                onTap: (){
+                                  Get.to(() => ProfileView());
+                                },
                                 child: Icon(Icons.edit)),
                           ),
                         ),
@@ -140,7 +140,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 GestureDetector(
                   onTap: (){
                     scaffoldKey.currentState!.openEndDrawer();
-                      Get.to(() => RateView());
+                    Get.to(() => RateView());
                   },
                   child: Container(
                     decoration: BoxDecoration(

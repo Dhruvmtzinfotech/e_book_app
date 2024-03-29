@@ -1,15 +1,20 @@
+import 'dart:convert';
+
 import 'package:e_book_app/app/modules/login/controllers/login_controller.dart';
 import 'package:e_book_app/app/modules/otp/views/otp_view.dart';
 import 'package:e_book_app/app/routes/app_pages.dart';
+import 'package:e_book_app/utils/apptheme.dart';
 import 'package:e_book_app/utils/responsive.dart';
 import 'package:e_book_app/widgets/widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:loading_indicator/loading_indicator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:step_progress_indicator/step_progress_indicator.dart';
 import '../../../../function.dart';
+import '../../../../model/usermodel.dart';
 import '../../profile/controllers/profile_controller.dart';
 
 class LoginView extends StatefulWidget {
@@ -72,17 +77,20 @@ class _LoginViewState extends State<LoginView> {
                           borderRadius: BorderRadius.circular(8.0),
                         ),
                         child: TextFormField(
-                          controller: loginCon.phoneController,
-                          keyboardType: TextInputType.text,
-                          decoration: InputDecoration(
-                            contentPadding: EdgeInsets.all(20.0),
-                            border: InputBorder.none,
-                            hintText: 'Enter Mobile Number',
-                            prefixIcon: Padding(
-                                padding: EdgeInsets.all(15),
-                                child: Text('+91')),
-                          ),
-                         // validator: profileCon.mobilValidation
+                            // inputFormatters: [
+                            //   FilteringTextInputFormatter.deny(RegExp(r'[+]')),
+                            // ],
+                            controller: loginCon.phoneController,
+                            keyboardType: TextInputType.text,
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.all(20.0),
+                              border: InputBorder.none,
+                              hintText: 'Enter Mobile Number',
+                              prefixIcon: Padding(
+                                  padding: EdgeInsets.all(15),
+                                  child: Text('+91')),
+                            ),
+                            validator: profileCon.mobileValidation
                         ),
                       ),
                       // Row(
@@ -109,28 +117,33 @@ class _LoginViewState extends State<LoginView> {
                       //   ],
                       // ),
                       SizedBox(height: height_3),
+                      // _isLoading
+                      //     ? AppTheme.progressIndicator()
+                      //     :
                       Button(
                           btnText: "Login",
                           onClick: () async {
-                            if(loginCon.loginKey.currentState?.validate() ?? false) {
-                                var mobile = profileCon.mobileController.text;
-                              }
-                            else{
-                              await FirebaseAuth.instance.verifyPhoneNumber(verificationCompleted:
-                                  (PhoneAuthCredential credential) {},
-                                  verificationFailed: (FirebaseAuthException ex) {
-                                  },
-                                  codeSent: (String verificationId, int? resendToken) {
+                            // setState(() {
+                            //   _isLoading = true;
+                            // });
+                            await FirebaseAuth.instance.verifyPhoneNumber(
+                                verificationCompleted: (PhoneAuthCredential credential) {},
+                                verificationFailed: (FirebaseAuthException ex) {},
+                                codeSent: (String verificationId,
+                                    int? resendToken) {
+                                  Get.to(() => OtpView(),
+                                      arguments: verificationId);
+                                },
+                                codeAutoRetrievalTimeout: (String verificationId) {},
+                                phoneNumber:loginCon.phoneController.text.toString());
 
-                                    Get.to(() => OtpView(),arguments: verificationId);
-                                  },
-                                  codeAutoRetrievalTimeout:(String verificationId) {},
-                                  phoneNumber:loginCon.phoneController.text.toString());
-                              }
+                            // setState(() {
+                            //   _isLoading = false;
+                            // });
 
                           }),
                       SizedBox(height: height_1),
-                      Row(children: <Widget>[
+                      Row(children: [
                         Expanded(
                           child: Container(
                               margin: EdgeInsets.only(left: 10.0, right: 20.0),
@@ -157,31 +170,27 @@ class _LoginViewState extends State<LoginView> {
 
                           final GoogleSignIn googleSignIn = GoogleSignIn();
                           try {
-                            final GoogleSignInAccount? googleSignInAccount =await googleSignIn.signIn();
+                            final GoogleSignInAccount? googleSignInAccount =
+                                await googleSignIn.signIn();
                             if (googleSignInAccount != null) {
                               final GoogleSignInAuthentication
-                              googleSignInAuthentication = await googleSignInAccount.authentication;
-                              final AuthCredential authCredential = GoogleAuthProvider.credential(
-                                  idToken: googleSignInAuthentication.idToken,
-                                      accessToken: googleSignInAuthentication
-                                          .accessToken);
+                                  googleSignInAuthentication =
+                                  await googleSignInAccount.authentication;
+                              final AuthCredential authCredential =
+                                  GoogleAuthProvider.credential(idToken: googleSignInAuthentication.idToken,
+                                accessToken: googleSignInAuthentication.accessToken,
+                              );
 
-                              UserCredential result = await FirebaseAuth
-                                  .instance
-                                  .signInWithCredential(authCredential);
+                              UserCredential result = await FirebaseAuth.instance.signInWithCredential(authCredential);
                               User user = result.user!;
 
                               var name = user.displayName.toString();
                               var email = user.email.toString();
                               var photo = user.photoURL.toString();
-                              var googleId = user.uid.toString();
 
                               SharedPreferences prefs = await SharedPreferences.getInstance();
-                              prefs.setString("name", name);
                               prefs.setBool('isLogin', true);
-                              prefs.setString("email", email);
-                              prefs.setString("photo", photo);
-                              prefs.setString("googleId", googleId);
+                              _saveUserDetail(name, email, photo);
 
                               Get.offAllNamed(Routes.HOME);
                             }
@@ -201,7 +210,10 @@ class _LoginViewState extends State<LoginView> {
                                   borderRadius: BorderRadius.circular(25.0),
                                 ),
                                 child: Center(
-                                  child: CircularProgressIndicator(color: Colors.grey,backgroundColor: Colors.deepOrangeAccent),
+                                  child: CircularProgressIndicator(
+                                    color: Colors.grey,
+                                    backgroundColor: Colors.deepOrangeAccent,
+                                  ),
                                 ),
                               )
                             : Container(
@@ -217,8 +229,7 @@ class _LoginViewState extends State<LoginView> {
                                       child:
                                           Image.asset("assets/img/Google.jpg"),
                                     ),
-                                    Text(
-                                      "Continue with Google",
+                                    Text("Continue with Google",
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 20.0,
@@ -263,5 +274,18 @@ class _LoginViewState extends State<LoginView> {
         ),
       ),
     );
+  }
+  _saveUserDetail(userEmail, userName, userImage) async {
+    UserProfile userProfile = UserProfile(
+      email: userEmail ?? "",
+      name: userName ?? "",
+      mobileNumber: "",
+      city: "",
+      userProfileFileImg: "",
+      userImage: userImage ?? "",
+    );
+    String jsonBody = json.encode(userProfile.toJson());
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    await pref.setString("userProfile", jsonBody);
   }
 }

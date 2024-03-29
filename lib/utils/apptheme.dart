@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:step_progress_indicator/step_progress_indicator.dart';
 
 class AppTheme{
 
@@ -53,7 +54,7 @@ class AppTheme{
     ));
   }
 
-  static InputDecoration customTextfield(String hintText) {
+  static InputDecoration customTextfield(String hintText,IconData iconData) {
     return InputDecoration(
       hintText: hintText,
       filled: true,
@@ -67,8 +68,25 @@ class AppTheme{
         borderRadius: BorderRadius.circular(10.0),
         borderSide: BorderSide(color: Colors.grey[400]!, width: 1.0),
       ),
-      // prefixIcon: Icon(prefixicon.iconData),
+       prefixIcon: Icon(iconData),
       hintStyle: TextStyle(color: Colors.grey),
+    );
+  }
+
+  static StepProgressIndicator progressIndicator()
+  {
+    return StepProgressIndicator(
+      totalSteps: 15,
+      currentStep: 12,
+      size: 20,
+      selectedColor: Colors.amber,
+      unselectedColor: Colors.black,
+      roundedEdges: Radius.circular(10),
+      gradientColor: LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: [Colors.orange, Colors.white],
+      ),
     );
   }
 

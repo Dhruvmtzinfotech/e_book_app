@@ -52,7 +52,6 @@ class _ProfileViewState extends State<ProfileView> {
                     //           color: Colors.grey,
                     //         ),
                     //         image: DecorationImage(image: FileImage(File(profileCon.profileUrl.value)),fit: BoxFit.cover))),
-
                     Positioned(
                       bottom: 1,
                       right: 8,
@@ -86,36 +85,36 @@ class _ProfileViewState extends State<ProfileView> {
                     TextFormField(
                       controller: profileCon.nameController,
                       keyboardType: TextInputType.text,
-                      decoration: AppTheme.customTextfield("Name"),
+                      decoration: AppTheme.customTextfield("Name",Icons.person),
                       validator: profileCon.nameValidation
                     ),
                     SizedBox(height: height_3),
                     TextFormField(
                       controller: profileCon.mobileController,
                       keyboardType: TextInputType.number,
-                      decoration: AppTheme.customTextfield("Mobile No"),
-                      validator: profileCon.mobilValidation,
-                      maxLength: 10,
+                      decoration: AppTheme.customTextfield("Mobile No",Icons.phone_android),
+                      validator: profileCon.mobileValidation,
                     ),
-                    SizedBox(height: height_1),
+                    SizedBox(height: height_3),
                     TextFormField(
                       controller: profileCon.emailController,
                       keyboardType: TextInputType.emailAddress,
-                      decoration: AppTheme.customTextfield("Email"),
+                      decoration: AppTheme.customTextfield("Email",Icons.email_outlined),
                       validator: profileCon.emailValidation
                     ),
                     SizedBox(height: height_3),
                     TextFormField(
                       controller: profileCon.cityController,
                       keyboardType: TextInputType.text,
-                      decoration: AppTheme.customTextfield("City"),
+                      decoration: AppTheme.customTextfield("City",Icons.location_city),
                       validator: profileCon.cityValidation
                     ),
                     SizedBox(height: height_5),
                     Button(btnText: "Update", onClick: (){
                       if (profileCon.formKey.currentState?.validate() ?? false) {
-                        }
+                      }
                       else {
+
                       }
         
                     })

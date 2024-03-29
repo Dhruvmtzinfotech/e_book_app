@@ -1,4 +1,3 @@
-import 'package:e_book_app/utils/helpers.dart';
 import 'package:e_book_app/utils/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,7 +8,6 @@ import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await SharedPrefs().init();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -23,7 +21,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
   late SharedPreferences prefs;
 
   @override
@@ -36,36 +33,18 @@ class _MyAppState extends State<MyApp> {
     prefs = await SharedPreferences.getInstance();
   }
 
-  Future<void> updateUserData(String name,String mobile,String email,String city) async {
+  Future<void> updateUserData(String name,String mobile,String email,String city,) async {
      prefs.setString('name', name);
      prefs.setString('mobile', mobile);
      prefs.setString('email', email);
      prefs.setString('city', city);
-
-
-  }
-
-  String getUserName()  {
-    return prefs.getString('name') ?? 'name';
-  }
-
-  String getUserEmail() {
-    return prefs.getString('email') ?? 'email';
-  }
-
-  String getUserPhoto() {
-    return prefs.getString('photo') ?? 'photo';
-  }
-
-  String getUserCity(){
-    return prefs.getString('city') ?? 'city';
-  }
-
-  Future<void> clearUserData() async {
-    await prefs.clear();
   }
 
 
+
+
+  //appId :- ca-app-pub-1431816577529734~8523946483
+  //bottom banner:- ca-app-pub-1431816577529734/9972759526
 
   @override
   Widget build(BuildContext context) {
@@ -75,9 +54,6 @@ class _MyAppState extends State<MyApp> {
           FocusScope.of(context).requestFocus(FocusNode());
         },
         child: GetMaterialApp(
-          // home: Scaffold(
-          //   body: Text("Hi ${SharedPrefs().username}"),
-          // ),
           debugShowCheckedModeBanner: false,
           initialRoute: AppPages.INITIAL,
           getPages: AppPages.routes,

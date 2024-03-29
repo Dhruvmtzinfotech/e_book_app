@@ -10,6 +10,8 @@ dependencies:
     sdk: flutter
 
     # https://ebookapp-437be.firebaseapp.com/__/auth/handler  => facebookId
+    # ca-app-pub-9595262426417185~3918804299                  => admobId/mtz
+    # ca-app-pub-9595262426417185/5338863029                  => unitId
 
 
 
@@ -50,11 +52,9 @@ dependencies:
   flutter_expandable_text: ^1.0.0
   # for app rating
   in_app_review: ^2.0.9
-  # for show inidcator
+  # for show indicator
   smooth_page_indicator: ^1.1.0
-  loading_indicator: ^3.1.1
-
-
+  step_progress_indicator: ^1.0.2
 
 
 

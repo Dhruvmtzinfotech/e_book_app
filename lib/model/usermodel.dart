@@ -1,32 +1,39 @@
-import 'dart:convert';
+class UserProfile {
+  String email;
+  String name;
+  String mobileNumber;
+  String city;
+  String userProfileFileImg;
+  String userImage;
 
-UserModel userModelFromJson(String str) => UserModel.fromJson(json.decode(str));
-String userModelToJson(UserModel data) => json.encode(data.toJson());
-
-class UserModel {
-  String? name;
-  String? mobile;
-  String? email;
-  String? city;
-
-  UserModel({
-    this.name,
-    this.mobile,
-    this.email,
-    this.city,
+  UserProfile({
+    required this.email,
+    required this.name,
+    required this.mobileNumber,
+    required this.city,
+    required this.userProfileFileImg,
+    required this.userImage,
   });
 
-  factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
-    name: json["name"],
-    mobile: json["mobile"],
-    email: json["email"],
-    city: json["city"],
-  );
+  Map<String, dynamic> toJson() {
+    return {
+      'email': email,
+      'name': name,
+      'mobileNumber': mobileNumber,
+      'city': city,
+      'userProfileFileImg': userProfileFileImg,
+      'userImage': userImage,
+    };
+  }
 
-  Map<String, dynamic> toJson() => {
-    "name": name,
-    "mobile": mobile,
-    "email": email,
-    "city": city,
-  };
+  factory UserProfile.fromJson(Map<String, dynamic> json) {
+    return UserProfile(
+      email: json['email'],
+      name: json['name'],
+      mobileNumber: json['mobileNumber'],
+      city: json['city'],
+      userProfileFileImg: json['userProfileFileImg'],
+      userImage: json['userImage'],
+    );
+  }
 }

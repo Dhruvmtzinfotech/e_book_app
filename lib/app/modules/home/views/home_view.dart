@@ -18,7 +18,6 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-
   int _currentPosition = 0; // DotsIndicator
 
 
@@ -27,6 +26,7 @@ class _HomeViewState extends State<HomeView> {
     super.initState();
     homeCon.getData();
   }
+
 
   HomeController homeCon = Get.put(HomeController());
   @override
@@ -217,6 +217,10 @@ class _HomeViewState extends State<HomeView> {
                         ),
                       ),
                     ),
+
+
+
+
                   ],
                 ),
               ),

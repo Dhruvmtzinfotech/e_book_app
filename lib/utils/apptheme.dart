@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:step_progress_indicator/step_progress_indicator.dart';
 
 class AppTheme{
-
-
   static ThemeData light = ThemeData(
+      scaffoldBackgroundColor: Color(0xffF0FBF5),
       textTheme: TextTheme(
-
       )
   );
 
@@ -73,21 +70,39 @@ class AppTheme{
     );
   }
 
-  static StepProgressIndicator progressIndicator()
+  static Container customSliderContainer(String img)
   {
-    return StepProgressIndicator(
-      totalSteps: 15,
-      currentStep: 12,
-      size: 20,
-      selectedColor: Colors.amber,
-      unselectedColor: Colors.black,
-      roundedEdges: Radius.circular(10),
-      gradientColor: LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        colors: [Colors.orange, Colors.white],
-      ),
+    return Container(
+      child: Image.asset(img),
     );
   }
 
+
+  static GestureDetector customDrawerField({required VoidCallback onTap,required String text,required String img,})
+  {
+    return GestureDetector(
+      onTap:onTap,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.grey.shade300,
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: [
+              Text(text,
+                style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 18.0,
+                ),
+              ),
+              Spacer(),
+              Image.asset(img),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 }

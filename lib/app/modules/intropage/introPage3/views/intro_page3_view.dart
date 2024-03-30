@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../utils/assets.dart';
 import '../../../../../utils/responsive.dart';
+import '../../../../../utils/strings.dart';
 
 class IntroPage3View extends StatefulWidget {
   const IntroPage3View({super.key});
@@ -20,19 +22,21 @@ class _IntroPage3ViewState extends State<IntroPage3View> {
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 children: [
-                  SizedBox(height: height_15,),
-                  Image.asset("assets/img/welcomeImg.jpg"),
-                  Text("Welcome to Ebook App" ,style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold
-                  ),),
+                  SizedBox(height: height_15),
+                  Image.asset(icIntroPage_3),
+                  Text(
+                    intro_3_title,
+                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                  ),
                   SizedBox(height: height_3),
-            
-                  Text("We have true friend in our life and the books is that.Book has power to change yourself and make you more valuable ",textAlign: TextAlign.center,style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                  ),),
-            
+                  Text(
+                    intro_3_body,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ],
               ),
             ),

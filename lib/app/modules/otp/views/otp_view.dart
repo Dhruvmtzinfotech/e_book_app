@@ -1,7 +1,10 @@
+import 'dart:math';
+
 import 'package:e_book_app/app/modules/otp/controllers/otp_controller.dart';
 import 'package:e_book_app/app/routes/app_pages.dart';
 import 'package:e_book_app/widgets/widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -57,9 +60,10 @@ class _OtpViewState extends State<OtpView> {
                  UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
                 Get.offAllNamed(Routes.HOME);
                }
-               catch (ex)
-               {
-                 print('Verification failed: $ex');
+               catch (ex) {
+                 if (kDebugMode) {
+                   print('Verification failed: $ex');
+                 }
                }
              })
 

@@ -1,20 +1,15 @@
-import 'dart:convert';
-
 import 'package:e_book_app/app/modules/login/controllers/login_controller.dart';
-import 'package:e_book_app/app/modules/otp/views/otp_view.dart';
 import 'package:e_book_app/app/routes/app_pages.dart';
-import 'package:e_book_app/utils/apptheme.dart';
 import 'package:e_book_app/utils/responsive.dart';
 import 'package:e_book_app/widgets/widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:step_progress_indicator/step_progress_indicator.dart';
-import '../../../../function.dart';
-import '../../../../model/usermodel.dart';
+import '../../../../utils/function.dart';
+import '../../../../utils/assets.dart';
 import '../../profile/controllers/profile_controller.dart';
 
 class LoginView extends StatefulWidget {
@@ -27,7 +22,6 @@ class _LoginViewState extends State<LoginView> {
 
   final FirebaseAuth auth = FirebaseAuth.instance;
   ProfileController profileCon = Get.put(ProfileController());
-
   LoginController loginCon = Get.put(LoginController());
 
   @override
@@ -47,26 +41,20 @@ class _LoginViewState extends State<LoginView> {
                         shape: BoxShape.circle,
                         border: Border.all(color: Colors.black, width: 0.5)),
                     child: ClipOval(
-                      child: Image.asset(
-                        "assets/img/phoneAuth.png",
-                        height: height_20,
-                      ),
+                      child: Image.asset(icLoginTitle,height: height_20),
                     ),
                   ),
                 ),
                 SizedBox(height: height_5),
                 Center(
-                  child: Text(
-                    "Login with Mobile",
+                  child: Text("Login with Mobile",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: height_2,
-                ),
+                SizedBox(height: height_2),
                 Form(
                   key: loginCon.loginKey,
                   child: Column(
@@ -77,11 +65,8 @@ class _LoginViewState extends State<LoginView> {
                           borderRadius: BorderRadius.circular(8.0),
                         ),
                         child: TextFormField(
-                            // inputFormatters: [
-                            //   FilteringTextInputFormatter.deny(RegExp(r'[+]')),
-                            // ],
                             controller: loginCon.phoneController,
-                            keyboardType: TextInputType.text,
+                            keyboardType: TextInputType.number,
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.all(20.0),
                               border: InputBorder.none,
@@ -123,24 +108,7 @@ class _LoginViewState extends State<LoginView> {
                       Button(
                           btnText: "Login",
                           onClick: () async {
-                            // setState(() {
-                            //   _isLoading = true;
-                            // });
-                            await FirebaseAuth.instance.verifyPhoneNumber(
-                                verificationCompleted: (PhoneAuthCredential credential) {},
-                                verificationFailed: (FirebaseAuthException ex) {},
-                                codeSent: (String verificationId,
-                                    int? resendToken) {
-                                  Get.to(() => OtpView(),
-                                      arguments: verificationId);
-                                },
-                                codeAutoRetrievalTimeout: (String verificationId) {},
-                                phoneNumber:loginCon.phoneController.text.toString());
-
-                            // setState(() {
-                            //   _isLoading = false;
-                            // });
-
+                            signInWithPhone();
                           }),
                       SizedBox(height: height_1),
                       Row(children: [
@@ -170,8 +138,7 @@ class _LoginViewState extends State<LoginView> {
 
                           final GoogleSignIn googleSignIn = GoogleSignIn();
                           try {
-                            final GoogleSignInAccount? googleSignInAccount =
-                                await googleSignIn.signIn();
+                            final GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
                             if (googleSignInAccount != null) {
                               final GoogleSignInAuthentication
                                   googleSignInAuthentication =
@@ -190,7 +157,11 @@ class _LoginViewState extends State<LoginView> {
 
                               SharedPreferences prefs = await SharedPreferences.getInstance();
                               prefs.setBool('isLogin', true);
-                              _saveUserDetail(name, email, photo);
+                              prefs.setString('name', name);
+                              prefs.setString('email', email);
+                              prefs.setString('photo', photo);
+
+                              //loginCon.saveUserDetail(name, email, photo);
 
                               Get.offAllNamed(Routes.HOME);
                             }
@@ -210,9 +181,9 @@ class _LoginViewState extends State<LoginView> {
                                   borderRadius: BorderRadius.circular(25.0),
                                 ),
                                 child: Center(
-                                  child: CircularProgressIndicator(
-                                    color: Colors.grey,
-                                    backgroundColor: Colors.deepOrangeAccent,
+                                  child: LoadingAnimationWidget.staggeredDotsWave(
+                                    color: Colors.white,
+                                    size: 60,
                                   ),
                                 ),
                               )
@@ -226,8 +197,7 @@ class _LoginViewState extends State<LoginView> {
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.all(15.0),
-                                      child:
-                                          Image.asset("assets/img/Google.jpg"),
+                                      child: Image.asset(icGoogleAuth),
                                     ),
                                     Text("Continue with Google",
                                       style: TextStyle(
@@ -254,7 +224,7 @@ class _LoginViewState extends State<LoginView> {
                             children: [
                               Padding(
                                 padding: const EdgeInsets.all(15.0),
-                                child: Image.asset("assets/img/Facebook.jpg"),
+                                child: Image.asset(icFaceBookAuth),
                               ),
                               Text("Continue with Facebook",
                                   style: TextStyle(
@@ -275,17 +245,5 @@ class _LoginViewState extends State<LoginView> {
       ),
     );
   }
-  _saveUserDetail(userEmail, userName, userImage) async {
-    UserProfile userProfile = UserProfile(
-      email: userEmail ?? "",
-      name: userName ?? "",
-      mobileNumber: "",
-      city: "",
-      userProfileFileImg: "",
-      userImage: userImage ?? "",
-    );
-    String jsonBody = json.encode(userProfile.toJson());
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    await pref.setString("userProfile", jsonBody);
-  }
+
 }

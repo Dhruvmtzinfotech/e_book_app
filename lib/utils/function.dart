@@ -1,6 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:get/get.dart';
+import '../app/modules/login/controllers/login_controller.dart';
+import '../app/modules/otp/views/otp_view.dart';
 
+LoginController loginCon = Get.put(LoginController());
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
 Future<UserCredential> signInWithFacebook() async {
@@ -26,7 +30,15 @@ Future<UserCredential> signInWithFacebook() async {
   }
 }
 
-signInWithGoogle() async
+Future? signInWithPhone() async
 {
+  await FirebaseAuth.instance.verifyPhoneNumber(
+      verificationCompleted: (PhoneAuthCredential credential) {},
+      verificationFailed: (FirebaseAuthException ex) {},
+      codeSent: (String verificationId, int? resendToken) {
 
+        Get.to(() => OtpView(), arguments: verificationId);
+      },
+      codeAutoRetrievalTimeout: (String verificationId) {},
+      phoneNumber:"+91${loginCon.phoneController.text.toString()}");
 }

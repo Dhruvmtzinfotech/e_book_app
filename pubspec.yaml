@@ -54,9 +54,9 @@ dependencies:
   in_app_review: ^2.0.9
   # for show indicator
   smooth_page_indicator: ^1.1.0
-  step_progress_indicator: ^1.0.2
-
-
+  # for network image show
+  cached_network_image: ^3.3.1
+  loading_animation_widget: ^1.2.1
 
 
 dev_dependencies:

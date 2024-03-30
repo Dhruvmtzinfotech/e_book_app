@@ -3,10 +3,13 @@ import 'package:dots_indicator/dots_indicator.dart';
 import 'package:e_book_app/app/modules/books/views/books_view.dart';
 import 'package:e_book_app/app/modules/home/controllers/home_controller.dart';
 import 'package:e_book_app/app/modules/video/views/video_view.dart';
+import 'package:e_book_app/utils/apptheme.dart';
 import 'package:e_book_app/utils/responsive.dart';
 import 'package:e_book_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../../../utils/assets.dart';
 
 final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -21,13 +24,11 @@ class _HomeViewState extends State<HomeView> {
   int _currentPosition = 0; // DotsIndicator
 
 
-  @override
-  void initState() {
-    super.initState();
-    homeCon.getData();
-  }
-
-
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   homeCon.getData();
+  // }
   HomeController homeCon = Get.put(HomeController());
   @override
   Widget build(BuildContext context) {
@@ -62,31 +63,11 @@ class _HomeViewState extends State<HomeView> {
                     }
                 ),
                 items: [
-                  Container(
-                    child: Center(
-                      child: Image.asset("assets/img/city.webp"),
-                    ),
-                  ),
-                  Container(
-                    child: Center(
-                      child: Image.asset("assets/img/Home.jpg"),
-                    ),
-                  ),
-                  Container(
-                    child: Center(
-                      child: Image.asset("assets/img/Codingimage.jpg"),
-                    ),
-                  ),
-                  Container(
-                    child: Center(
-                      child: Image.asset("assets/img/city.webp"),
-                    ),
-                  ),
-                  Container(
-                    child: Center(
-                      child: Image.asset("assets/img/Home.jpg"),
-                    ),
-                  ),
+                  AppTheme.customSliderContainer(icHomeSlider_1),
+                  AppTheme.customSliderContainer(icHomeSlider_2),
+                  AppTheme.customSliderContainer(icHomeSlider_3),
+                  AppTheme.customSliderContainer(icHomeSlider_4),
+                  AppTheme.customSliderContainer(icHomeSlider_5),
                 ],
               ),
               DotsIndicator(
@@ -116,8 +97,8 @@ class _HomeViewState extends State<HomeView> {
                           child: Stack(
                             alignment: Alignment.center,
                             children: [
-                              Image.asset("assets/img/ornaments.jpg"),
-                              Image.asset("assets/icons/book.png", height: height_6),
+                              Image.asset(icHomeImage),
+                              Image.asset(icHomeBook, height: height_6),
                               Positioned(
                                 bottom: 28,
                                 child: Text('Books',
@@ -145,8 +126,8 @@ class _HomeViewState extends State<HomeView> {
                           child: Stack(
                             alignment: Alignment.center,
                             children: [
-                              Image.asset("assets/img/ornaments.jpg"),
-                              Image.asset("assets/icons/video.png", height: height_6),
+                              Image.asset(icHomeImage),
+                              Image.asset(icHomeVideo, height: height_6),
                               Positioned(
                                 bottom: 28,
                                 child: Text('Videos',
@@ -177,8 +158,8 @@ class _HomeViewState extends State<HomeView> {
                         child: Stack(
                           alignment: Alignment.center,
                           children: [
-                            Image.asset("assets/img/ornaments.jpg"),
-                            Image.asset("assets/icons/coming-soon.png", height: height_6),
+                            Image.asset(icHomeImage),
+                            Image.asset(icHomeComingSoon, height: height_6),
                             Positioned(
                               bottom: 28,
                               child: Text('Coming Soon',
@@ -201,8 +182,8 @@ class _HomeViewState extends State<HomeView> {
                         child: Stack(
                           alignment: Alignment.center,
                           children: [
-                            Image.asset("assets/img/ornaments.jpg"),
-                            Image.asset("assets/icons/coming-soon.png", height: height_6),
+                            Image.asset(icHomeImage),
+                            Image.asset(icHomeComingSoon, height: height_6),
                             Positioned(
                               bottom: 28,
                               child: Text('Coming Soon',
@@ -217,10 +198,6 @@ class _HomeViewState extends State<HomeView> {
                         ),
                       ),
                     ),
-
-
-
-
                   ],
                 ),
               ),

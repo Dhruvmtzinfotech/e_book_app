@@ -1,7 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_book_app/app/modules/faq/views/faq_view.dart';
 import 'package:e_book_app/app/modules/privacypolicy/views/privacypolicy_view.dart';
 import 'package:e_book_app/app/modules/profile/views/profile_view.dart';
 import 'package:e_book_app/app/modules/rate/views/rate_view.dart';
+import 'package:e_book_app/utils/apptheme.dart';
+import 'package:e_book_app/utils/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -99,7 +102,11 @@ class _CustomDrawerState extends State<CustomDrawer> {
                             ),
                           ),
                           child: ClipOval(
-                              child: Image.network(homeCon.photo.value,fit: BoxFit.cover,)
+                              child:CachedNetworkImage(
+                                imageUrl: homeCon.photo.value,fit: BoxFit.cover,
+                                placeholder: (context, url) => CircularProgressIndicator(),
+                                errorWidget: (context, url, error) => Icon(Icons.error),
+                              ),
                             //: Image.asset("assets/img/phoneAuth.png", height: height_18),
                           ),
                         ),
@@ -137,226 +144,76 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   color: Colors.black,
                 ),
                 SizedBox(height: height_2),
-                GestureDetector(
-                  onTap: (){
-                    scaffoldKey.currentState!.openEndDrawer();
-                    Get.to(() => RateView());
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.grey.shade300,
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          Text("Rate Us",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 18.0,
-                            ),
-                          ),
-                          Spacer(),
-                          Image.asset("assets/img/back_arrow.png"),
-                        ],
-                      ),
-                    ),
-                  ),
+                AppTheme.customDrawerField(
+                    onTap:(){
+                      scaffoldKey.currentState!.openEndDrawer();
+                      Get.to(() => RateView());
+                    },
+                    text: "Rate Us",
+                    img: icBackArrow
                 ),
-                SizedBox(height: height_2,),
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.grey.shade300,
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        Text("Contact With Us",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 18.0,
-                          ),
-                        ),
-                        Spacer(),
-                        Image.asset("assets/img/back_arrow.png"),
-                      ],
-                    ),
-                  ),
+                SizedBox(height: height_2),
+                AppTheme.customDrawerField(
+                    onTap:(){},
+                    text: "Contact with Us",
+                    img: icBackArrow
                 ),
-                SizedBox(height: height_2,),
-                GestureDetector(
-                  onTap: () async{
-                    scaffoldKey.currentState!.openEndDrawer();
-                    ShareText();
-                    // Shareimage();
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.grey.shade300,
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          Text("Share With Frinds",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 18.0,
-                            ),
-                          ),
-                          Spacer(),
-                          Image.asset("assets/img/back_arrow.png"),
-                        ],
-                      ),
-                    ),
-                  ),
+                SizedBox(height: height_2),
+                AppTheme.customDrawerField(
+                    onTap: () async{
+                      scaffoldKey.currentState!.openEndDrawer();
+                      ShareText();
+                    },
+                    text: "Share With Friends",
+                    img:icBackArrow
                 ),
-                SizedBox(height: height_2,),
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.grey.shade300,
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        Text("Our More Apps",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 18.0,
-                          ),
-                        ),
-                        Spacer(),
-                        Image.asset("assets/img/back_arrow.png"),
-                      ],
-                    ),
-                  ),
+                SizedBox(height: height_2),
+                AppTheme.customDrawerField(
+                    onTap: (){},
+                    text: "Our More Apps",
+                    img:icBackArrow
                 ),
-                SizedBox(height: height_2,),
-                GestureDetector(
-                  onTap: (){
-                    scaffoldKey.currentState!.openEndDrawer();
+                SizedBox(height: height_2),
+                AppTheme.customDrawerField(
+                    onTap: (){
+                      scaffoldKey.currentState!.openEndDrawer();
+                      Get.to(() => FaqView());
+                    },
+                    text: "FAQ",
+                    img:icBackArrow
+                ),
+                SizedBox(height: height_2),
+                AppTheme.customDrawerField(
+                    onTap: (){
+                      scaffoldKey.currentState!.openEndDrawer();
+                      Get.to(() => ContactUsView());
+                    },
+                    text: "Contact Us",
+                    img:icBackArrow
+                ),
+                SizedBox(height: height_2),
+                AppTheme.customDrawerField(
+                    onTap: (){
+                      scaffoldKey.currentState!.openEndDrawer();
+                      Get.to(() => PrivacyPolicyView());
+                    },
+                    text: "Privacy policy",
+                    img:icBackArrow
+                ),
+                SizedBox(height: height_2),
+                AppTheme.customDrawerField(
+                    onTap: () async{
+                      SharedPreferences prefs = await SharedPreferences.getInstance();
+                      prefs.clear();
 
-                    Get.to(() => FaqView());
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.grey.shade300,
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          Text("FAQ",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 18.0,
-                            ),
-                          ),
-                          Spacer(),
-                          Image.asset("assets/img/back_arrow.png"),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: height_2,),
-                GestureDetector(
-                  onTap: (){
-                    scaffoldKey.currentState!.openEndDrawer();
-                    Get.to(() => ContactUsView());
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.grey.shade300,
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          Text("Contact Us",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 18.0,
-                            ),
-                          ),
-                          Spacer(),
-                          Image.asset("assets/img/back_arrow.png"),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: height_2,),
-                GestureDetector(
-                  onTap: (){
-                    scaffoldKey.currentState!.openEndDrawer();
-                    Get.to(() => PrivacyPolicyView());
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.grey.shade300,
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          Text("Privacy Policy",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 18.0,
-                            ),
-                          ),
-                          Spacer(),
-                          Image.asset("assets/img/back_arrow.png"),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: height_2,),
-                GestureDetector(
-                  onTap: () async{
-                    SharedPreferences prefs = await SharedPreferences.getInstance();
-                    prefs.clear();
+                      GoogleSignIn googleSignIn = GoogleSignIn();  // Google logout
+                      googleSignIn.signOut();
 
-                    GoogleSignIn googleSignIn = GoogleSignIn();  // Google logout
-                    googleSignIn.signOut();
-
-                    Get.back();
-                    Get.offAllNamed(Routes.LOGIN);
-
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.grey.shade300,
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          Text("Log Out",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 18.0,
-                            ),
-                          ),
-                          Spacer(),
-                          Image.asset("assets/img/back_arrow.png"),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+                      Get.offAllNamed(Routes.LOGIN);
+                    },
+                    text: "Log Out",
+                    img: icBackArrow
+                )
               ],
             ),
           ),

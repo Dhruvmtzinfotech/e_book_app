@@ -1,0 +1,19 @@
+
+const String icSplashImage = "assets/img/splash.jpg";
+const String icIntroPage_1 = "assets/img/onBoardingImg.jpg";
+const String icIntroPage_2 = "assets/img/onBoardingImg.jpg";
+const String icIntroPage_3 = "assets/img/welcomeImg.jpg";
+const String icLoginTitle = "assets/img/phoneAuth.png";
+const String icGoogleAuth = "assets/img/Google.jpg";
+const String icFaceBookAuth = "assets/img/Facebook.jpg";
+const String icHomeSlider_1 = "assets/img/city.webp";
+const String icHomeSlider_2 = "assets/img/Home.jpg";
+const String icHomeSlider_3 = "assets/img/Codingimage.jpg";
+const String icHomeSlider_4 = "assets/img/city.webp";
+const String icHomeSlider_5 = "assets/img/Home.jpg";
+const String icHomeImage = "assets/img/ornaments.jpg";
+const String icHomeBook = "assets/icons/book.png";
+const String icHomeVideo = "assets/icons/video.png";
+const String icHomeComingSoon = "assets/icons/coming-soon.png";
+const String icBackArrow = "assets/img/back_arrow.png";
+const String icPdf = "https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf";

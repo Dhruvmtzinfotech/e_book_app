@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_expandable_text/flutter_expandable_text.dart';
 import 'package:get/get.dart';
+import '../../../../utils/strings.dart';
 import '../controllers/faq_controller.dart';
 
 class FaqView extends GetView<FaqController> {
@@ -41,10 +42,7 @@ class FaqView extends GetView<FaqController> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: ExpandableText(
-                'Among the vast library of books I’ve explored, “To Kill a'
-                    ' Mockingbird” by Harper Lee shines as my absolute favorite.'
-                    ' Set against the backdrop of the racially segregated American South in'
-                    ' the 1930s,',
+                faqViewBody,
                 textAlign: TextAlign.center,
               ),
             ),

@@ -1,3 +1,4 @@
+import 'package:e_book_app/app/modules/onboarding/controllers/onboarding_controller.dart';
 import 'package:e_book_app/app/routes/app_pages.dart';
 import 'package:e_book_app/utils/responsive.dart';
 import 'package:flutter/material.dart';
@@ -17,11 +18,9 @@ class OnboardingView extends StatefulWidget {
 }
 
 class _OnboardingViewState extends State<OnboardingView> {
-  bool onLastPage = false;
-  PageController _controller = PageController();
-
   @override
   Widget build(BuildContext context) {
+    OnboardingController onboardingCon = Get.put(OnboardingController());
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -43,10 +42,10 @@ class _OnboardingViewState extends State<OnboardingView> {
       body: Stack(
         children: [
           PageView(
-            controller: _controller,
+            controller: onboardingCon.controller,
             onPageChanged: (index) {
               setState(() {
-                onLastPage = (index == 2);
+                onboardingCon.onLastPage.value = (index == 2);
               });
             },
             children: [
@@ -61,19 +60,18 @@ class _OnboardingViewState extends State<OnboardingView> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 SmoothPageIndicator(
-                  controller: _controller,
+                  controller: onboardingCon.controller,
                   count: 3,
                   effect: ExpandingDotsEffect(
                     activeDotColor: Colors.orange,
                   ),
                 ),
-                onLastPage
+                onboardingCon.onLastPage.value
                     ? SizedBox(
                   width: width_40,
                       child: ElevatedButton(
                           onPressed: () async {
-                            SharedPreferences prefs =
-                                await SharedPreferences.getInstance();
+                            SharedPreferences prefs = await SharedPreferences.getInstance();
                             prefs.setBool("isFirst", true);
                             Get.offAllNamed(Routes.LOGIN);
                           },
@@ -92,7 +90,7 @@ class _OnboardingViewState extends State<OnboardingView> {
                   width: width_40,
                       child: ElevatedButton(
                           onPressed: () {
-                            _controller.nextPage(
+                            onboardingCon.controller.nextPage(
                               duration: Duration(microseconds: 500),
                               curve: Curves.easeIn,
                             );

@@ -1,4 +1,5 @@
 import 'package:e_book_app/app/modules/login/controllers/login_controller.dart';
+import 'package:e_book_app/app/modules/otp/views/otp_view.dart';
 import 'package:e_book_app/app/routes/app_pages.dart';
 import 'package:e_book_app/utils/responsive.dart';
 import 'package:e_book_app/widgets/widgets.dart';
@@ -8,11 +9,16 @@ import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../../../api/widgets.dart';
+import '../../../../utils/apptheme.dart';
 import '../../../../utils/function.dart';
 import '../../../../utils/assets.dart';
+import '../../home/views/home_view.dart';
 import '../../profile/controllers/profile_controller.dart';
 
 class LoginView extends StatefulWidget {
+  const LoginView({super.key});
+
   @override
   State<LoginView> createState() => _LoginViewState();
 }
@@ -46,7 +52,7 @@ class _LoginViewState extends State<LoginView> {
                   ),
                 ),
                 SizedBox(height: height_5),
-                Center(
+                const Center(
                   child: Text("Login with Mobile",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
@@ -67,7 +73,7 @@ class _LoginViewState extends State<LoginView> {
                         child: TextFormField(
                             controller: loginCon.phoneController,
                             keyboardType: TextInputType.number,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               contentPadding: EdgeInsets.all(20.0),
                               border: InputBorder.none,
                               hintText: 'Enter Mobile Number',
@@ -102,20 +108,29 @@ class _LoginViewState extends State<LoginView> {
                       //   ],
                       // ),
                       SizedBox(height: height_3),
-                      // _isLoading
-                      //     ? AppTheme.progressIndicator()
-                      //     :
                       Button(
                           btnText: "Login",
                           onClick: () async {
-                            signInWithPhone();
+                            await loginCon.api.userLogin(
+                                mobile:loginCon.phoneController.text)!.then((value) {
+                              if(loginCon.isLogin==true)
+                              {
+                                AppTheme.getSnackBar(message: value["message"]);
+                                Get.to(() => OtpView());
+                              }
+                              else
+                              {
+                                AppTheme.getSnackBar(message: value["message"]);
+                              }
+                              //loginCon.phoneController.clear();
+                            });
                           }),
                       SizedBox(height: height_1),
                       Row(children: [
                         Expanded(
                           child: Container(
-                              margin: EdgeInsets.only(left: 10.0, right: 20.0),
-                              child: Divider(
+                              margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                              child: const Divider(
                                 color: Colors.black,
                                 height: 36,
                               )),
@@ -123,8 +138,8 @@ class _LoginViewState extends State<LoginView> {
                         Text("OR"),
                         Expanded(
                           child: Container(
-                              margin: EdgeInsets.only(left: 20.0, right: 10.0),
-                              child: Divider(
+                              margin: const EdgeInsets.only(left: 20.0, right: 10.0),
+                              child: const Divider(
                                 color: Colors.black,
                                 height: 36,
                               )),
@@ -199,7 +214,7 @@ class _LoginViewState extends State<LoginView> {
                                       padding: const EdgeInsets.all(15.0),
                                       child: Image.asset(icGoogleAuth),
                                     ),
-                                    Text("Continue with Google",
+                                    const Text("Continue with Google",
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 20.0,
@@ -226,7 +241,7 @@ class _LoginViewState extends State<LoginView> {
                                 padding: const EdgeInsets.all(15.0),
                                 child: Image.asset(icFaceBookAuth),
                               ),
-                              Text("Continue with Facebook",
+                              const Text("Continue with Facebook",
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 20.0,

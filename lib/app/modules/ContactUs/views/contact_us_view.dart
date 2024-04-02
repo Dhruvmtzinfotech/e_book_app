@@ -12,7 +12,7 @@ class ContactUsView extends GetView<ContactUsController> {
     ContactUsController contactUsCon = Get.put(ContactUsController());
     return Scaffold(
       appBar: AppBar(
-        title: Text('Feedback'),
+        title: const Text('Feedback'),
         centerTitle: true,
       ),
       body:Column(
@@ -30,7 +30,7 @@ class ContactUsView extends GetView<ContactUsController> {
               child: TextFormField(
                 controller: contactUsCon.contactController,
                 keyboardType: TextInputType.text,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: InputBorder.none,
                   hintText: 'Feedback',
                   contentPadding: EdgeInsets.symmetric(horizontal: 20.0),

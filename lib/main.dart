@@ -20,28 +20,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  // late SharedPreferences prefs;
-  //
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   initializeSharedPreferences();
-  // }
-  //
-  // Future<void> initializeSharedPreferences() async {
-  //   prefs = await SharedPreferences.getInstance();
-  // }
-  //
-  // Future<void> updateUserData(String name,String mobile,String email,String city,) async {
-  //    prefs.setString('name', name);
-  //    prefs.setString('mobile', mobile);
-  //    prefs.setString('email', email);
-  //    prefs.setString('city', city);
-  // }
-
-
-
-
   //appId :- ca-app-pub-1431816577529734~8523946483
   //bottom banner:- ca-app-pub-1431816577529734/9972759526
 
@@ -53,7 +31,6 @@ class _MyAppState extends State<MyApp> {
           FocusScope.of(context).requestFocus(FocusNode());
         },
         child: GetMaterialApp(
-
           debugShowCheckedModeBanner: false,
           initialRoute: AppPages.INITIAL,
           getPages: AppPages.routes,

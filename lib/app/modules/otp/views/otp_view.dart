@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:e_book_app/app/modules/otp/controllers/otp_controller.dart';
 import 'package:e_book_app/app/routes/app_pages.dart';
@@ -20,7 +19,7 @@ class _OtpViewState extends State<OtpView> {
     OtpController otpCon = Get.put(OtpController());
     return Scaffold(
       appBar: AppBar(
-        title: Text("OtpView"),
+        title: const Text("OtpView"),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -28,7 +27,7 @@ class _OtpViewState extends State<OtpView> {
           child: Column(
             children: [
               Center(child: Image.asset("assets/img/phoneAuth.png")),
-              Text("A 4 digit code has been sent to example@gmail.com",
+              const Text("A 4 digit code has been sent to example@gmail.com",
                 style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
@@ -40,7 +39,7 @@ class _OtpViewState extends State<OtpView> {
                 child: TextFormField(
                     controller: otpCon.otpController,
                     keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                         contentPadding: EdgeInsets.all(20.0),
                         border: InputBorder.none,
                         hintText: 'Enter otp',
@@ -49,7 +48,7 @@ class _OtpViewState extends State<OtpView> {
                     cursorColor: Colors.deepOrangeAccent.shade100
                 ),
               ),
-              SizedBox(height: 30.0),
+              const SizedBox(height: 30.0),
 
              Button(btnText: "Verify", onClick: () async{
                try {

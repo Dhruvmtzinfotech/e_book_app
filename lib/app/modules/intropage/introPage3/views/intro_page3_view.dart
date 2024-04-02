@@ -24,12 +24,12 @@ class _IntroPage3ViewState extends State<IntroPage3View> {
                 children: [
                   SizedBox(height: height_15),
                   Image.asset(icIntroPage_3),
-                  Text(
+                  const Text(
                     intro_3_title,
                     style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: height_3),
-                  Text(
+                  const Text(
                     intro_3_body,
                     textAlign: TextAlign.center,
                     style: TextStyle(

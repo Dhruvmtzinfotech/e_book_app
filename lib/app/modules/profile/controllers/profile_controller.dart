@@ -1,8 +1,9 @@
+import 'dart:typed_data';
+import 'package:e_book_app/api/api.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../../model/usermodel.dart';
 
 class ProfileController extends GetxController {
 
@@ -10,6 +11,10 @@ class ProfileController extends GetxController {
   TextEditingController mobileController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController cityController = TextEditingController();
+  Uint8List? userImage = Uint8List(0);
+
+  Api api = Api();
+
 
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();

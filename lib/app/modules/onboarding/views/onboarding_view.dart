@@ -32,11 +32,11 @@ class _OnboardingViewState extends State<OnboardingView> {
               prefs.setBool("isFirst", true);
               Get.offAllNamed(Routes.LOGIN);
             },
-            child: Text("Skip",
+            child: const Text("Skip",
               style: TextStyle(color: Colors.black),
             ),
           ),
-          SizedBox(width: 16),
+          const SizedBox(width: 16),
         ],
       ),
       body: Stack(
@@ -48,21 +48,21 @@ class _OnboardingViewState extends State<OnboardingView> {
                 onboardingCon.onLastPage.value = (index == 2);
               });
             },
-            children: [
+            children: const [
               IntroPage1View(),
               IntroPage2View(),
               IntroPage3View(),
             ],
           ),
           Container(
-            alignment: Alignment(0, 0.75),
+            alignment: const Alignment(0, 0.75),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 SmoothPageIndicator(
                   controller: onboardingCon.controller,
                   count: 3,
-                  effect: ExpandingDotsEffect(
+                  effect: const ExpandingDotsEffect(
                     activeDotColor: Colors.orange,
                   ),
                 ),
@@ -78,7 +78,7 @@ class _OnboardingViewState extends State<OnboardingView> {
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.deepOrange,
                           ),
-                          child: Text("Done", style: TextStyle(
+                          child: const Text("Done", style: TextStyle(
                               fontWeight: FontWeight.w500,
                               color: Colors.white,
                               fontSize:20
@@ -91,14 +91,14 @@ class _OnboardingViewState extends State<OnboardingView> {
                       child: ElevatedButton(
                           onPressed: () {
                             onboardingCon.controller.nextPage(
-                              duration: Duration(microseconds: 500),
+                              duration: const Duration(microseconds: 500),
                               curve: Curves.easeIn,
                             );
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.deepOrange,
                           ),
-                          child: Text("Next",
+                          child: const Text("Next",
                             style: TextStyle(
                               fontWeight: FontWeight.w500,
                               color: Colors.white,

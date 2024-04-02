@@ -20,21 +20,21 @@ class RateController extends GetxController {
       barrierDismissible: false,
       builder: (context) {
         return AlertDialog(
-          title: Text('Rate this App'),
-          content: Text('Please leave a rating for our app!'),
+          title: const Text('Rate this App'),
+          content: const Text('Please leave a rating for our app!'),
           actions: [
             TextButton(
               onPressed: () {
                 Get.back();
               },
-              child: Text('CANCEL'),
+              child: const Text('CANCEL'),
             ),
             TextButton(
               onPressed: () {
                 // Handle submitting rating
                 Get.back();
               },
-              child: Text('SUBMIT'),
+              child: const Text('SUBMIT'),
             ),
           ],
         );

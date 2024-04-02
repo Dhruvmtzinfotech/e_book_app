@@ -1,13 +1,18 @@
 import 'dart:convert';
+import 'package:e_book_app/api/api.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../../../model/usermodel.dart';
+import '../../../../model/UserProfile.dart';
 
 class LoginController extends GetxController {
 
-  TextEditingController mobileController = TextEditingController();
+  // TextEditingController mobileController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
+
+  Api api = Api();
+
+  bool isLogin = false;
 
 
   final GlobalKey<FormState> loginKey = GlobalKey<FormState>();

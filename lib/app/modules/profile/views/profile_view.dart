@@ -23,7 +23,7 @@ class _ProfileViewState extends State<ProfileView> {
     return Scaffold(
       appBar: AppBar(
       centerTitle: true,
-        title: Text("EditProfile"),
+        title: const Text("EditProfile"),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -67,13 +67,13 @@ class _ProfileViewState extends State<ProfileView> {
                           onTap: (){
                             bottomSheet();
                           },
-                            child: Icon(Icons.upload)),
+                            child: const Icon(Icons.upload)),
                       ),
                     ),
                   ],
                 ),
               ),
-              Text(homeCon.name.value,style: TextStyle(
+              Text(homeCon.name.value,style: const TextStyle(
                 fontWeight: FontWeight.w500,
                 fontSize: 18.0,
               ),),
@@ -110,13 +110,29 @@ class _ProfileViewState extends State<ProfileView> {
                       validator: profileCon.cityValidation
                     ),
                     SizedBox(height: height_5),
-                    Button(btnText: "Update", onClick: (){
-                      if (profileCon.formKey.currentState?.validate() ?? false) {
-                      }
-                      else {
+                    Button(btnText: "Update", onClick: () async{
 
-                      }
-        
+                      // if (profileCon.formKey.currentState?.validate() ?? false) {
+                      //   //AppTheme.getSnackBar(message: "Please Required Field");
+                      // }
+                      // else if(profileCon.userImage!.isEmpty) {
+                      //   AppTheme.getSnackBar(message: "Please Select Image");
+                      // }
+                      // else {
+                      //   await profileCon.api.updateProfile(
+                      //     mobile:profileCon.mobileController.text,
+                      //     name:profileCon.nameController.text,
+                      //     email: profileCon.emailController.text,
+                      //     city: profileCon.cityController.text,
+                      //     image: profileCon.userImage)!.then((value){
+                      //     if(value != null){
+                      //       if(value["isSuccess"]){
+                      //         Get.back();
+                      //         apiDialog(value["message"]);
+                      //       }
+                      //     }
+                      //   });
+                      // }
                     })
                   ],
                 ),

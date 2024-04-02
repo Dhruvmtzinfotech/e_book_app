@@ -25,11 +25,11 @@ class _IntroPage2ViewState extends State<IntroPage2View> {
                     height: height_15,
                   ),
                   Image.asset(icIntroPage_2),
-                  Text(intro_2_title,
+                  const Text(intro_2_title,
                     style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: height_3),
-                  Text(intro_2_body,
+                  const Text(intro_2_body,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 15,

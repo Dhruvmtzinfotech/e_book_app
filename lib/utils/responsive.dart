@@ -282,16 +282,16 @@ double width_100 = Responsive.width * 100;
 
 //region=====[ ELEVATION ]=====
 
-const double elvation_1 = 1.0;
-const double elvation_2 = 2.0;
-const double elvation_3 = 3.0;
-const double elvation_4 = 4.0;
-const double elvation_5 = 5.0;
-const double elvation_6 = 6.0;
-const double elvation_7 = 7.0;
-const double elvation_8 = 8.0;
-const double elvation_9 = 9.0;
-const double elvation_10 = 10.0;
+const double elevation_1 = 1.0;
+const double elevation_2 = 2.0;
+const double elevation_3 = 3.0;
+const double elevation_4 = 4.0;
+const double elevation_5 = 5.0;
+const double elevation_6 = 6.0;
+const double elevation_7 = 7.0;
+const double elevation_8 = 8.0;
+const double elevation_9 = 9.0;
+const double elevation_10 = 10.0;
 
 //endregion
 
@@ -347,4 +347,3 @@ double font_35 = 35.0;
 double font_40 = 35.0;
 double font_45 = 45.0;
 double font_50 = 50.0;
-

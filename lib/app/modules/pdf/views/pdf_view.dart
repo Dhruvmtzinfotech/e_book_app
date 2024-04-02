@@ -14,7 +14,7 @@ class _PdfViewState extends State<PdfView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("PDF Viewer"),
+        title: const Text("PDF Viewer"),
         actions: [
           IconButton(
             icon: const Icon(Icons.download),

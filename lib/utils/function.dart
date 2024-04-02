@@ -23,10 +23,10 @@ Future<UserCredential> signInWithFacebook() async {
     }
   } on FirebaseAuthException catch (e) {
     print('Firebase Auth Exception: ${e.message}');
-    throw e;
+    rethrow;
   } catch (e) {
     print('Other Exception: $e');
-    throw e;
+    rethrow;
   }
 }
 
@@ -37,7 +37,7 @@ Future? signInWithPhone() async
       verificationFailed: (FirebaseAuthException ex) {},
       codeSent: (String verificationId, int? resendToken) {
 
-        Get.to(() => OtpView(), arguments: verificationId);
+        Get.to(() => const OtpView(), arguments: verificationId);
       },
       codeAutoRetrievalTimeout: (String verificationId) {},
       phoneNumber:"+91${loginCon.phoneController.text.toString()}");

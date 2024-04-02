@@ -26,7 +26,7 @@ class BooksView extends GetView<BooksController> {
           itemBuilder: (BuildContext context, int index) {
             return GestureDetector(
               onTap: (){
-                Get.to(() => SubjectView());
+                Get.to(() => const SubjectView());
               },
               child: Stack(
                 alignment: Alignment.center,
@@ -34,7 +34,7 @@ class BooksView extends GetView<BooksController> {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(20.0),
                       child: Image.asset("assets/img/subjectImg.jpg")),
-                  Positioned(
+                  const Positioned(
                     child: Text('Subject 1',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,

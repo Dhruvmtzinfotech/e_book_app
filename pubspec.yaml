@@ -14,8 +14,9 @@ dependencies:
     # ca-app-pub-9595262426417185/5338863029                  => unitId
 
 
-
   cupertino_icons: ^1.0.2
+  # for api calling
+  dio: ^5.4.2+1
   # for statManagement
   get: ^4.6.6
   # for Image
@@ -56,7 +57,10 @@ dependencies:
   smooth_page_indicator: ^1.1.0
   # for network image show
   cached_network_image: ^3.3.1
+  # for user login show indicator
   loading_animation_widget: ^1.2.1
+  double_tap_to_exit: ^1.0.1
+
 
 
 dev_dependencies:

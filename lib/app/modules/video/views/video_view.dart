@@ -19,6 +19,8 @@ const List<String> _videoIds = [
 
 
 class VideoView extends StatefulWidget {
+  const VideoView({super.key});
+
   @override
   _VideoViewState createState() => _VideoViewState();
 }
@@ -76,7 +78,7 @@ class _VideoViewState extends State<VideoView> {
                         ],
                       ),
                     ),
-                    Expanded(
+                    const Expanded(
                       flex: 2,
                       child: SingleChildScrollView(
                         // child: Controls(),
@@ -88,7 +90,7 @@ class _VideoViewState extends State<VideoView> {
               return ListView(
                 children: [
                   player,
-                   VideoPositionIndicator(),
+                   const VideoPositionIndicator(),
                    // Controls(),
                 ],
               );
@@ -191,10 +193,10 @@ class VideoPositionSeeker extends StatelessWidget {
 
     return Row(
       children: [
-         Text('Seek',
+         const Text('Seek',
           style: TextStyle(fontWeight: FontWeight.w300),
         ),
-        SizedBox(width: 14),
+        const SizedBox(width: 14),
         Expanded(
           child: StreamBuilder<YoutubeVideoState>(
             stream: context.ytController.videoStateStream,

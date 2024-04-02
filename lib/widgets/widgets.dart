@@ -31,7 +31,7 @@ class Button extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            padding:  EdgeInsets.symmetric(vertical: 15.0,horizontal: 156.0),
+            padding:  const EdgeInsets.symmetric(vertical: 15.0,horizontal: 156.0),
             decoration: BoxDecoration(
               color:  Colors.deepOrangeAccent,
               borderRadius: BorderRadius.circular(20.0),
@@ -102,12 +102,12 @@ class _CustomDrawerState extends State<CustomDrawer> {
                             ),
                           ),
                           child: ClipOval(
-                              child:CachedNetworkImage(
-                                imageUrl: homeCon.photo.value,fit: BoxFit.cover,
-                                placeholder: (context, url) => CircularProgressIndicator(),
-                                errorWidget: (context, url, error) => Icon(Icons.error),
-                              ),
-                            //: Image.asset("assets/img/phoneAuth.png", height: height_18),
+                               child:
+                            CachedNetworkImage(
+                              imageUrl: homeCon.photo.value,fit: BoxFit.cover,
+                              placeholder: (context, url) => const CircularProgressIndicator(),
+                              errorWidget: (context, url, error) => const Icon(Icons.error),
+                            ),
                           ),
                         ),
                         Positioned(
@@ -123,9 +123,9 @@ class _CustomDrawerState extends State<CustomDrawer> {
                             ),
                             child: GestureDetector(
                                 onTap: (){
-                                  Get.to(() => ProfileView());
+                                  Get.to(() => const ProfileView());
                                 },
-                                child: Icon(Icons.edit)),
+                                child: const Icon(Icons.edit)),
                           ),
                         ),
                       ],
@@ -134,20 +134,20 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 ),
                 Row(
                   children: [
-                    Text(homeCon.name.value,style: TextStyle(
+                    Text(homeCon.name.value,style: const TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 18.0,
                     ),),
                   ],
                 ),
-                Divider(
+                const Divider(
                   color: Colors.black,
                 ),
                 SizedBox(height: height_2),
                 AppTheme.customDrawerField(
                     onTap:(){
                       scaffoldKey.currentState!.openEndDrawer();
-                      Get.to(() => RateView());
+                      Get.to(() => const RateView());
                     },
                     text: "Rate Us",
                     img: icBackArrow
@@ -177,7 +177,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 AppTheme.customDrawerField(
                     onTap: (){
                       scaffoldKey.currentState!.openEndDrawer();
-                      Get.to(() => FaqView());
+                      Get.to(() => const FaqView());
                     },
                     text: "FAQ",
                     img:icBackArrow
@@ -186,7 +186,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 AppTheme.customDrawerField(
                     onTap: (){
                       scaffoldKey.currentState!.openEndDrawer();
-                      Get.to(() => ContactUsView());
+                      Get.to(() => const ContactUsView());
                     },
                     text: "Contact Us",
                     img:icBackArrow
@@ -195,7 +195,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 AppTheme.customDrawerField(
                     onTap: (){
                       scaffoldKey.currentState!.openEndDrawer();
-                      Get.to(() => PrivacyPolicyView());
+                      Get.to(() => const PrivacyPolicyView());
                     },
                     text: "Privacy policy",
                     img:icBackArrow

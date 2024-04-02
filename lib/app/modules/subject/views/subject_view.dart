@@ -30,7 +30,7 @@ class SubjectView extends GetView<SubjectController> {
                   // var data = {
                   //   "pdfUrl": "assets/pdf/my_document.pdf"
                   // };
-                  Get.to(() => PdfView());
+                  Get.to(() => const PdfView());
                 },
                 child: Stack(
                   alignment: Alignment.center,
@@ -38,7 +38,7 @@ class SubjectView extends GetView<SubjectController> {
                     ClipRRect(
                         borderRadius: BorderRadius.circular(20.0),
                         child: Image.asset("assets/img/sunset.jpg")),
-                    Positioned(
+                    const Positioned(
                       child: Text('Chapter 1',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,

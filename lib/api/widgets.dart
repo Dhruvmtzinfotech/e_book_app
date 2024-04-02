@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -8,6 +9,23 @@ import '../utils/responsive.dart';
 final ImagePicker picker = ImagePicker();
 ProfileController profileCon = Get.put(ProfileController());
 
+Future? apiDialog(String msg) {
+  return Get.dialog(
+    barrierDismissible:false,
+    CupertinoAlertDialog(
+      title: Text(msg),
+      actions: [
+        CupertinoActionSheetAction(
+          child: Text('Ok'),
+          onPressed: () {
+            Get.back();
+          },
+        ),
+      ],
+    ),
+  );
+}
+
 
 
 Future? bottomSheet() {
@@ -16,7 +34,7 @@ Future? bottomSheet() {
       width: width_100,
       height: height_25,
       decoration: BoxDecoration(
-        gradient: LinearGradient(
+        gradient: const LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
@@ -25,7 +43,7 @@ Future? bottomSheet() {
           ],
           stops: [0.0, 1.0],
         ),
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(20.0),
           topRight: Radius.circular(20.0),
         ),
@@ -34,7 +52,7 @@ Future? bottomSheet() {
             color: Colors.grey.withOpacity(0.5),
             spreadRadius: 3,
             blurRadius: 7,
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
           ),
         ],
       ),
@@ -43,7 +61,7 @@ Future? bottomSheet() {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Container(
+            SizedBox(
               width: width_50,
               height: height_8,
               child: ElevatedButton(onPressed: () async{
@@ -55,13 +73,13 @@ Future? bottomSheet() {
                 }
               },  style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all<Color>(Colors.black),
-              ),child: Text("Camera",style: TextStyle(
+              ),child: const Text("Camera",style: TextStyle(
                       fontSize: 20.0,
                       color: Colors.white
                   ),)),
             ),
             SizedBox(height: height_2),
-            Container(
+            SizedBox(
               width: width_50,
               height: height_8,
               child: ElevatedButton(onPressed: () async{
@@ -73,7 +91,7 @@ Future? bottomSheet() {
 
               },  style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all<Color>(Colors.black),
-              ),child: Text("Galary",
+              ),child: const Text("Galary",
                 style: TextStyle(
                   fontSize: 20.0,
                   color: Colors.white
